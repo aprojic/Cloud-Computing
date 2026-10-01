@@ -13,7 +13,7 @@ Lab instructions (EN + HR) are on **Merlin**. This repository holds the code and
 
 1. **Fork** this repository to your own GitHub account (button at the top right).
 2. In **your fork**: **Code → Codespaces → Create codespace on main**.
-3. Wait for the environment to build (the first start takes a few minutes). You get Ubuntu 24.04 with Docker, the same OS as the Azure VM in Lab 01.
+3. Wait for the environment to build (usually a minute or two). You get Ubuntu 24.04 with Docker, the same OS as the Azure VM in Lab 01.
 
 When new labs are added here, sync your fork with **Sync fork → Update branch**.
 
