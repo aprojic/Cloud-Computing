@@ -18,6 +18,8 @@ sudo service nginx start
 
 Open the **Ports** tab (next to *Terminal*). Port **80** appears as *nginx (Lab 01)*. Right-click it → **Port Visibility → Public**, then copy the **Forwarded Address** and open it on your phone.
 
+> Notice the address starts with `https://`, while on the Azure VM it was `http://`. GitHub puts its own HTTPS proxy in front of your server. Who manages that layer here: you or GitHub?
+
 ## 3. Look around (~5 min)
 
 ```bash
