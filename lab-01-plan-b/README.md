@@ -4,7 +4,7 @@ Use this **only if told to in class**, when Azure isn't working. It's the same l
 
 ## 1. Start your machine (~5 min)
 
-Fork this repo, then in **your fork**: **Code → Codespaces → Create codespace on main**. Open the terminal (**Ctrl + `**) once it's ready.
+Click **Open in GitHub Codespaces** on the [main page](../README.md), or use **Code → Codespaces → Create codespace on main**. You don't need a fork for this lab. Open the terminal (**Ctrl + `**) once it's ready.
 
 ## 2. Make it a web server (~10 min)
 
