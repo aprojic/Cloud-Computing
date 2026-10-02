@@ -1,0 +1,23 @@
+name: Typo or unclear step
+description: Something in the instructions is wrong, outdated or hard to follow.
+title: "[Docs] "
+labels: [docs]
+body:
+  - type: dropdown
+    id: lab
+    attributes:
+      label: Which lab?
+      options: [Lab 00, Lab 01, Lab 01 Plan B, README, Other]
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where exactly?
+      placeholder: "e.g. Part 2, step 2.3"
+  - type: textarea
+    id: what
+    attributes:
+      label: What's wrong, and what would be better?
+    validations:
+      required: true

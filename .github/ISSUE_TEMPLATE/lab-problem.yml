@@ -1,0 +1,42 @@
+name: Problem with a lab
+description: A step doesn't work the way the instructions say.
+title: "[Lab XX] "
+labels: [lab-problem]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Issues are **public**: never paste passwords, keys, tokens or your full subscription ID.
+  - type: dropdown
+    id: lab
+    attributes:
+      label: Which lab?
+      options: [Lab 00, Lab 01, Lab 01 Plan B, Other]
+    validations:
+      required: true
+  - type: input
+    id: step
+    attributes:
+      label: Which step?
+      placeholder: "e.g. 1.3 Create the virtual machine"
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where were you working?
+      options: [Azure Cloud Shell, GitHub Codespaces, My own computer]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Command and output
+      description: Paste the command you ran and the error you got.
+      render: shell

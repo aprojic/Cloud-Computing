@@ -1,0 +1,5 @@
+# Pages that need a login or block bots; they work in a browser.
+^https://portal\.azure\.com
+^https://github\.com/codespaces$
+^https://codespaces\.new/
+^https://github\.com/settings

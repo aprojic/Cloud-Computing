@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use or adapt these lab materials, please cite them as below."
+title: "Cloud Computing: hands-on cloud labs"
+abstract: >-
+  Lab instructions and environment for the course Cloud Computing (IT sustavi u oblaku / Cloud IT Systems)
+  at Aspira University of Applied Sciences, Split: IaaS and PaaS on Microsoft Azure, containers with
+  Docker in GitHub Codespaces, and AI in the cloud.
+authors:
+  - family-names: Projić
+    given-names: Ante
+    orcid: "https://orcid.org/0009-0009-1673-7270"
+    affiliation: "Aspira University of Applied Sciences (Veleučilište Aspira), Split"
+license: CC-BY-4.0
+repository-code: "https://github.com/aprojic/Cloud-Computing"
+date-released: 2026-10-02
+keywords:
+  - cloud computing
+  - teaching materials
+  - azure
+  - docker
+  - github codespaces
