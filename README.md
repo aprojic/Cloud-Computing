@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Ubuntu-24.04-0E1116?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu 24.04">
   <img src="https://img.shields.io/badge/Docker-in--Docker-0E1116?style=flat-square&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/Azure-for%20Students-0E1116?style=flat-square&logo=microsoftazure&logoColor=white" alt="Azure for Students">
+  <img src="https://img.shields.io/badge/Azure-for%20Students-0E1116?style=flat-square" alt="Azure for Students">
   <img src="https://img.shields.io/badge/semester-2026%2F27-E82028?style=flat-square" alt="Semester 2026/27">
   <a href="https://github.com/aprojic/Cloud-Computing/actions/workflows/checks.yml"><img src="https://img.shields.io/github/actions/workflow/status/aprojic/Cloud-Computing/checks.yml?branch=main&style=flat-square&label=checks" alt="Checks"></a>
 </p>
@@ -22,7 +22,7 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 | # | Do this | Details |
 |:-:|---|---|
 | **1** | Open this week's lab in the table below | The instructions live here. The same text is on Merlin as a PDF. |
-| **2** | Work where the lab tells you to | Azure labs run in **Azure Cloud Shell** (in your browser). Container labs run in **GitHub Codespaces** (button above). |
+| **2** | Work where the lab tells you to | Azure labs run in **Azure Cloud Shell** (in your browser). Container labs run in **GitHub Codespaces** (button above). Copy commands from these pages, not from the PDF. |
 | **3** | Show your result in class, then submit on Merlin | A lab is **accepted** when you pass the short live check in class **and** your report is on Merlin by the deadline. |
 
 > [!TIP]

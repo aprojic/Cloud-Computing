@@ -22,6 +22,9 @@ In this course you work on **real cloud infrastructure**, not a simulation: you 
 - [ ] A computer with a modern browser (Chrome, Edge, Firefox or Safari).
 - [ ] Your phone (you may be asked to verify a phone number or set up sign-in security).
 
+> [!TIP]
+> **Copy commands from this GitHub page** (copy button at the top right of each code block), not from the PDF. PDF viewers often break multi-line commands.
+
 > **Do this at home, before Monday 5 October.** Activation sometimes takes a while, and in class there's no time to wait for it.
 
 ## Part 1 — Activate Azure for Students · ~10 min
@@ -39,7 +42,7 @@ In this course you work on **real cloud infrastructure**, not a simulation: you 
 > [!TIP]
 > **Common pitfalls**
 >
-> - **"You're not eligible"**: the offer is for full-time students aged 18+, verified through the school email. If you're a part-time student or the verification fails, tell me before Lab 01. You'll work in a pair, and that's fine.
+> - **"You're not eligible"**: the offer is for full-time students aged 18+, verified through the school email. If you're a part-time student or the verification fails, tell me before Lab 01. You'll do the lab on your own in GitHub Codespaces instead ([Plan B](../lab-01-first-server/plan-b.md)), so make sure Part 4 below works.
 > - **Already used the offer before** (e.g. at another school): one subscription per person. Tell me.
 > - You can check how much credit is left at <https://www.microsoftazuresponsorships.com/>.
 
@@ -74,14 +77,19 @@ Student subscriptions may only create resources in a small set of regions, usual
 1. In the portal search bar, type **Policy** and open it.
 2. Go to **Authoring → Assignments** and open **Allowed resource deployment regions**.
 3. Look at the **Allowed locations** parameter. **Write the list down.** You'll need it in every lab.
-4. Test one of them in Cloud Shell. A resource group is free, so this costs nothing:
+4. Test one of them in Cloud Shell. Replace `swedencentral` with one of **your** regions. Everything here is free:
 
 ```bash
-az group create --name lab0-test --location <one-of-your-regions> -o table
+LOC=swedencentral   # ← change to one of YOUR allowed regions
+az group create --name lab0-test --location $LOC -o table
+az network vnet create --resource-group lab0-test --name lab0-vnet --location $LOC -o none
+az vm list-skus --location $LOC --size Standard_B2ats_v2 --query "[].restrictions[].reasonCode" -o tsv
 az group delete --name lab0-test --yes
 ```
 
-Use the region's short name in lowercase without spaces, e.g. `westeurope`, `northeurope`, `swedencentral`, `germanywestcentral`, `italynorth`. Run `az account list-locations -o table` to see how each display name maps to its short name.
+The network test matters because the region policy is checked when a **resource** is created, not the group. The `list-skus` line checks that the VM size we use in Lab 01 is available to you there.
+
+Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swedencentral`, `italynorth`. Your list may look completely different (e.g. `eastus`, `centralindia`), and that's fine. Run `az account list-locations -o table` to see how each display name maps to its short name.
 
 > [!NOTE]
 > **Expected output**
@@ -92,7 +100,12 @@ Use the region's short name in lowercase without spaces, e.g. `westeurope`, `nor
 > swedencentral  lab0-test
 > ```
 >
-> The delete runs without output and takes a few seconds.
+> The network command prints nothing if it worked. The `list-skus` line must also print **nothing**: if it prints `NotAvailableForSubscription`, that size isn't available to you in this region, so try another region from your list. The delete runs without output.
+
+> [!TIP]
+> **`RequestDisallowedByAzure` or `RequestDisallowedByPolicy`?** That region isn't on your list. Delete the group (`az group delete --name lab0-test --yes`) and try another region.
+>
+> **`syntax error near unexpected token`?** You left `<` `>` in a command. Replace the whole placeholder, brackets included.
 
 ## Part 4 — GitHub (needed from Lab 03, start now) · ~5 min
 
@@ -109,7 +122,7 @@ From November we work with containers in **GitHub Codespaces**. Student verifica
 > - [ ] **Subscriptions** shows *Azure for Students* as *Active*.
 > - [ ] Cloud Shell opens and `az account show -o table` shows *Enabled*.
 > - [ ] You have **your list of allowed regions** written down.
-> - [ ] `az group create` worked in one of those regions, and you deleted the test group.
+> - [ ] In one of those regions the network test worked, `list-skus` printed nothing, and you deleted the test group. **Write this region down as your Lab 01 region.**
 > - [ ] (For Lab 03) GitHub account created and the student pack applied for.
 
 Lab 00 is not graded, but it is a **prerequisite** for Lab 01 (Monday 5 October). If something doesn't work, email me **before** the lab, not at the start of it, so we can solve it in time.
