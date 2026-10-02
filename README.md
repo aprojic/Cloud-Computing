@@ -16,16 +16,16 @@
 Lab environment for **IT sustavi u oblaku / Cloud IT Systems** at Aspira University of Applied Sciences, Split.
 Every lab's instructions live here, and the same text is on **Merlin** as a PDF. You **submit on Merlin**.
 
-## 🚀 Quick start
+## 🚀 How a lab works
 
-| # | Do this | What you get |
+| # | Do this | Details |
 |:-:|---|---|
-| **1** | Click **Open in GitHub Codespaces** above | or *Code → Codespaces → Create codespace on main* |
-| **2** | Wait a minute or two for the environment to build | Ubuntu 24.04 + Docker, the same OS as the Azure VM in Lab 01 |
-| **3** | Open the terminal with <kbd>Ctrl</kbd> + <kbd>`</kbd> and follow the lab | instructions on Merlin, code in this repo |
+| **1** | Open this week's lab in the table below | The instructions live here. The same text is on Merlin as a PDF. |
+| **2** | Work where the lab tells you to | Azure labs run in **Azure Cloud Shell** (in your browser). Container labs run in **GitHub Codespaces** (button above). |
+| **3** | Show your result in class, then submit on Merlin | A lab is **accepted** when you pass the short live check in class **and** your report is on Merlin by the deadline. |
 
 > [!TIP]
-> When a lab asks you to **save your work**, fork the repo first (top right → **Fork**) and open the codespace from *your* fork. When new labs appear here, update your fork with **Sync fork → Update branch**.
+> When a lab asks you to **save your work** in a codespace, fork the repo first (top right → **Fork**) and open the codespace from *your* fork. When new labs appear here, update your fork with **Sync fork → Update branch**.
 
 ## 🧪 Labs
 
