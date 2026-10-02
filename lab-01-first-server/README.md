@@ -21,29 +21,30 @@ A small Split agency wants a web page online **tonight**. They have no servers a
 - [ ] **[Lab 00](../lab-00-setup/README.md) done:** Azure for Students is active, Cloud Shell works, and you have **your list of allowed regions**.
 - [ ] A phone (or a second browser tab) to open your page.
 
-> No working subscription? Tell me before the lab and you'll work in a pair.
+> [!TIP]
+> **No Azure subscription? Plan B**
+>
+> If you can't use Azure for Students (e.g. you're a part-time student), do the same lab **on your own** in GitHub Codespaces: [plan-b.md](plan-b.md). You only need a GitHub account. If Azure fails for most of the class, I'll announce Plan B for everyone.
 
 > [!TIP]
-> **Plan B**
->
-> If Azure isn't working for most of the class, I'll announce **Plan B**: the same lab in GitHub Codespaces, following [plan-b.md](plan-b.md). You only need a GitHub account.
+> **Copy commands from this GitHub page** (copy button on each code block), not from the PDF. PDF viewers often break multi-line commands.
 
 ## Part 1 — Rent a server · ~12 min
 
 ### 1.1 Set your variables
 
-In Cloud Shell, set three variables. Replace `<your-region>` with one of **your** allowed regions, written the way Azure writes it (e.g. `westeurope`, `northeurope`, `germanywestcentral`, `italynorth`, `swedencentral`):
+In Cloud Shell, set three variables. Change `swedencentral` to **your Lab 01 region** from Lab 00:
 
 ```bash
 RG=lab1-rg
-LOC=<your-region>
+LOC=swedencentral   # ← change to YOUR region from Lab 00
 VM=web1
 ```
 
 > [!TIP]
 > **Cloud Shell forgets**
 >
-> After 20 minutes without activity the session ends and the variables are gone. If a command later complains about an empty value, run these three lines again.
+> The session ends after 20 minutes without activity, **and also when you close or reload its browser tab**. Then the variables are gone. Open anything else (portal pages, pricing) in a **new browser tab**. If a command later complains about an empty value, run these three lines again.
 
 ### 1.2 Create a resource group
 
@@ -87,6 +88,8 @@ time az vm create \
 >   ...
 > }
 > real    1m12.345s
+> user    0m1.234s
+> sys     0m0.123s
 > ```
 
 > [!TIP]
@@ -123,7 +126,7 @@ Type `yes` when asked about the host fingerprint. Your prompt changes to `studen
 > [!TIP]
 > **Permission denied (publickey)?**
 >
-> Your Cloud Shell session probably restarted and lost the SSH key. Run `ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa`, then `az vm user update -g $RG -n $VM -u student --ssh-key-value ~/.ssh/id_rsa.pub`, and try `ssh` again.
+> Your Cloud Shell session probably restarted and lost the SSH key **and** your variables. First run the three lines from 1.1 and the `IP=` line from 2.2 again. Then run `ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa`, then `az vm user update -g $RG -n $VM -u student --ssh-key-value ~/.ssh/id_rsa.pub`, and try `ssh` again.
 
 ### 2.3 Install nginx and publish your page
 
@@ -131,17 +134,18 @@ On the VM:
 
 ```bash
 sudo apt update && sudo apt install -y nginx
-echo "<h1>Your Name</h1><p>Word of the day: WORD</p>" | sudo tee /var/www/html/index.html
+echo '<meta charset="utf-8"><h1>Your Name</h1><p>Word of the day: WORD</p>' | sudo tee /var/www/html/index.html
 ```
 
-Replace **Your Name** with your name and **WORD** with the word written on the board at the start of the lab. Then open `http://<your-IP>` on your phone. Note that it is `http`, not `https`.
+Replace **Your Name** with your name (č, ć, š, ž, đ are fine) and **WORD** with the word written on the board at the start of the lab. Then open `http://` followed by your IP on your phone. Note that it is `http`, not `https`.
 
 > [!TIP]
 > **Page doesn't load?**
 >
 > - Check that the address starts with `http://`, because the browser may add `https`.
+> - Chrome may warn **"Connection is not secure"**. Tap **Continue to site**. That's expected: your server has no certificate. (Who would manage that layer in IaaS?)
 > - Check that 2.1 ran.
-> - Check that nginx is running: `systemctl status nginx` should say `active (running)`.
+> - Check that nginx is running: `systemctl is-active nginx` should print `active`.
 
 ## Part 3 — Look around and count the cost · ~8 min
 
@@ -171,28 +175,34 @@ The last command asks the **Azure Instance Metadata Service** about the machine 
 >     "zone": "",
 > ```
 
-In the lecture demo `nproc` showed **48**. Here it shows **2** (or 1 on `B1s`). Why? Keep your guess, because we come back to it in the lecture on virtualization and containers.
+Remember this number: **2** (or 1 on `B1s`). In an upcoming lecture you'll see a machine answer the same command with **48**, and we'll work out why.
 
 Type `exit` to leave the VM.
 
 ### 3.2 What does it cost?
 
-Find the **price per hour** of your VM size in your region. Use the portal (your VM → *Size*) or <https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/> (choose your region and search for your size). Then work out what it would cost if you forgot to delete it for a month.
+Open these in a **new browser tab** (keep Cloud Shell open):
+
+1. **List price.** On <https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/> find the hourly price of your VM size in your region. A VM is not just the VM: it also has an OS disk and a public IP, and both cost money too. Estimate the list price of all three for one forgotten month (730 hours). Use the portal (your VM → *Disks* and *Overview*) to see which disk type you got.
+2. **What you'd really pay.** Read the free services on <https://azure.microsoft.com/en-us/free/students>. With Azure for Students, how much of that month would actually come out of your $100 credit, and why?
 
 > [!IMPORTANT]
 > **In the report**
 >
-> Price per hour and your estimate for one forgotten month (show the calculation).
+> The list price per month of VM + disk + IP (show the calculation), what you'd actually pay with Azure for Students, and why the two differ.
 
 ## Part 4 — Show it, then delete it · ~8 min
 
 ### 4.1 Live check
 
-When I come to your desk, show me your page on **your** public IP with today's word. I'll ask you one short question about what you just did, for example:
+**Raise your hand as soon as your page works** (usually from about minute 20). I check people in the order they're ready, and you carry on with Part 3 or delete (4.2) right after. Show me your page on **your** public IP with today's word. I write down your IP, so put the same IP in your report. Then I ask one short question about what you just did, for example:
 
-- Which layers did you manage today, and which ones did Microsoft manage?
-- Which of the five NIST characteristics did you just use, and where?
-- What happens to your credit if the VM keeps running for a month?
+- Why did we have to open port 80?
+- What did `nproc` print, and what does that number mean?
+- What gets deleted when you delete the resource group?
+- What would keep costing money if you didn't delete anything?
+
+If I haven't reached you by the end of class, **don't delete yet**: stay a few minutes after class, show me, then delete.
 
 ### 4.2 Delete everything. Don't skip this!
 
@@ -221,17 +231,18 @@ The delete takes a minute or two. Afterwards `lab1-rg` must **not** appear in th
 > **To Merlin**
 >
 > - `lab01_<surname>.pdf` with:
->   1. Region, VM size and the `real` time from 1.3.
->   2. Price per hour and the one-month estimate.
->   3. A screenshot of `az group list` showing that `lab1-rg` is gone.
->   4. **3–4 sentences:** which NIST characteristics did you experience today, and where exactly? Name at least three.
+>   1. Region, VM size, the `real` time from 1.3, and the **public IP** you showed at the live check.
+>   2. A screenshot of the `az vm create` output showing that same IP.
+>   3. The cost answers from 3.2: list price per month (VM + disk + IP) and what you'd actually pay.
+>   4. A screenshot of `az group list` showing that `lab1-rg` is gone.
+>   5. **3–4 sentences:** which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We cover NIST in the lecture on 12 October, before the deadline.
 > - **Live check (4.1)** done in class. Without it the lab is not accepted.
 
 | Item | Required |
 |---|:-:|
 | Live check: page on your own IP with today's word + one answer | gate (pass/fail) |
-| Report: region, size, time, price, monthly estimate | ✓ |
+| Report: region, size, time, IP (matches the live check), cost answers | ✓ |
 | Proof of cleanup (screenshot) | ✓ |
-| NIST reflection (3+ characteristics, tied to your steps) | ✓ |
+| NIST reflection (3+ characteristics, tied to your own numbers) | ✓ |
 
 *Your answers are about **your** run: your region, your time, your price. Two identical reports will both be checked again in person.*

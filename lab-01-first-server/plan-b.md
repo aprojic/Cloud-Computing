@@ -1,16 +1,16 @@
 # Lab 01 — Plan B: your first server in GitHub Codespaces
 
-Use this **only if told to in class**, when Azure isn't working. It's the same lab as the [main instructions](README.md): same goal, same live check, same cleanup. Only the place your server runs is different. Put your name and the word of the day on the page exactly as in the main instructions.
+Use this if you **can't use Azure for Students** (e.g. you're a part-time student), or when I announce Plan B for the whole class. It's the same lab as the [main instructions](README.md): same goal, same live check, same cleanup. Only the place your server runs is different. Put your name and the word of the day on the page exactly as in the main instructions.
 
 ## 1. Start your machine (~5 min)
 
-Click **Open in GitHub Codespaces** on the [repository's main page](../README.md), or use **Code → Codespaces → Create codespace on main**. You don't need a fork for this lab. Open the terminal (**Ctrl + `**) once it's ready.
+Click **Open in GitHub Codespaces** on the [repository's main page](../README.md), or use **Code → Codespaces → Create codespace on main**. You don't need a fork for this lab. Once it's ready, open a terminal: menu **☰ → Terminal → New Terminal**.
 
 ## 2. Make it a web server (~10 min)
 
 ```bash
 sudo apt update && sudo apt install -y nginx
-echo "<h1>Your Name</h1><p>Word of the day: WORD</p>" | sudo tee /var/www/html/index.html
+echo '<meta charset="utf-8"><h1>Your Name</h1><p>Word of the day: WORD</p>' | sudo tee /var/www/html/index.html
 sudo service nginx start
 ```
 
@@ -28,7 +28,7 @@ free -h
 cat /etc/os-release | head -2
 ```
 
-Compare with the lecture demo (48 CPUs) and with what the Azure VM in the main instructions would give you. **Is a codespace IaaS or PaaS?** Which layers do *you* manage here? Bring your answer to the live check.
+Remember these numbers and compare them with what the Azure VM in the main instructions would give you. Think about it: **is a codespace IaaS or PaaS?** Which layers do *you* manage here? (We cover the models in the lecture on 12 October, so this goes in your report, not the live check.)
 
 ## 4. What does it cost? (~3 min)
 
