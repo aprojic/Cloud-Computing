@@ -23,7 +23,7 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 |:-:|---|---|
 | **1** | Open this week's lab in the table below | The instructions live here. The same text is on Merlin as a PDF. |
 | **2** | Work where the lab tells you to | Azure labs run in **Azure Cloud Shell** (in your browser). Container labs run in **GitHub Codespaces** (button above). Copy commands from these pages, not from the PDF. |
-| **3** | Show your result in class, then submit on Merlin | A lab is **accepted** when you pass the short live check in class **and** your report is on Merlin by the deadline. |
+| **3** | Submit your report on Merlin by the deadline | Each lab tells you exactly what goes in: your own data, screenshots and short answers. You can finish a lab at home. |
 
 > [!TIP]
 > When a lab asks you to **save your work** in a codespace, fork the repo first (top right → **Fork**) and open the codespace from *your* fork. When new labs appear here, update your fork with **Sync fork → Update branch**.

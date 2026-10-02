@@ -134,10 +134,12 @@ On the VM:
 
 ```bash
 sudo apt update && sudo apt install -y nginx
-echo '<meta charset="utf-8"><h1>Your Name</h1><p>Word of the day: WORD</p>' | sudo tee /var/www/html/index.html
+echo "<meta charset=utf-8><h1>Your Name</h1><p>Server time: $(date -u '+%Y-%m-%d %H:%M UTC')</p>" | sudo tee /var/www/html/index.html
 ```
 
-Replace **Your Name** with your name (č, ć, š, ž, đ are fine) and **WORD** with the word written on the board at the start of the lab. Then open `http://` followed by your IP on your phone. Note that it is `http`, not `https`.
+Replace **Your Name** with your name (č, ć, š, ž, đ are fine). The server writes its own time into the page when you run the command. Then open `http://` followed by your IP in a browser (your phone works too). Note that it is `http`, not `https`.
+
+**Take Screenshot A now:** the browser with **your IP in the address bar** and your page with your name and the server time. It goes in your report.
 
 > [!TIP]
 > **Page doesn't load?**
@@ -191,20 +193,9 @@ Open these in a **new browser tab** (keep Cloud Shell open):
 >
 > The list price per month of VM + disk + IP (show the calculation), what you'd actually pay with Azure for Students, and why the two differ.
 
-## Part 4 — Show it, then delete it · ~8 min
+## Part 4 — Delete it and prove it · ~8 min
 
-### 4.1 Live check
-
-**Raise your hand as soon as your page works** (usually from about minute 20). I check people in the order they're ready, and you carry on with Part 3 or delete (4.2) right after. Show me your page on **your** public IP with today's word. I write down your IP, so put the same IP in your report. Then I ask one short question about what you just did, for example:
-
-- Why did we have to open port 80?
-- What did `nproc` print, and what does that number mean?
-- What gets deleted when you delete the resource group?
-- What would keep costing money if you didn't delete anything?
-
-If I haven't reached you by the end of class, **don't delete yet**: stay a few minutes after class, show me, then delete.
-
-### 4.2 Delete everything. Don't skip this!
+### 4.1 Delete everything. Don't skip this!
 
 Back in Cloud Shell (not on the VM):
 
@@ -225,24 +216,53 @@ The delete takes a minute or two. Afterwards `lab1-rg` must **not** appear in th
 >
 > A running VM keeps using your credit even when you're not looking at it, and so do its disk and public IP. Deleting the resource group removes all of it at once.
 
+### 4.2 Show the audit trail
+
+Azure records every change in the **activity log**, including who made it and when. The record is kept for 90 days, even after the resources are gone. Ask it what happened in your resource group:
+
+```bash
+az monitor activity-log list -g $RG --offset 3h --status Succeeded --max-events 100 \
+  --query "[].{time:eventTimestamp, operation:operationName.localizedValue, caller:caller}" -o table
+```
+
+> [!NOTE]
+> **Expected output (your values will differ)**
+>
+> ```
+> Time                          Operation                                  Caller
+> ----------------------------  -----------------------------------------  -------------------------
+> 2026-10-05T16:52:10.123456Z   Delete resource group                      you@aspira.hr
+> 2026-10-05T16:31:44.654321Z   Create or Update Security Rule             you@aspira.hr
+> 2026-10-05T16:29:02.111111Z   Create or Update Virtual Machine           you@aspira.hr
+> ...
+> ```
+>
+> The delete can take a few minutes to show up. If it isn't listed yet, wait 2–3 minutes and run the command again.
+
+Take a screenshot of the table. This is how a cloud team answers "who created this server, and who deleted it?"
+
 ## Submission · by 19 October, before Lab 02
 
 > [!IMPORTANT]
 > **To Merlin**
 >
-> - `lab01_<surname>.pdf` with:
->   1. Region, VM size, the `real` time from 1.3, and the **public IP** you showed at the live check.
->   2. A screenshot of the `az vm create` output showing that same IP.
->   3. The cost answers from 3.2: list price per month (VM + disk + IP) and what you'd actually pay.
->   4. A screenshot of `az group list` showing that `lab1-rg` is gone.
->   5. **3–4 sentences:** which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We cover NIST in the lecture on 12 October, before the deadline.
-> - **Live check (4.1)** done in class. Without it the lab is not accepted.
+> `lab01_<surname>.pdf` with:
+>
+> 1. **Your data:** region, VM size, the `real` time from 1.3 and your public IP.
+> 2. **Screenshot A:** your page open in a browser, with **your IP in the address bar** and your name and server time on the page (2.3).
+> 3. **Screenshot B:** the `az vm create` output showing the same IP (1.3).
+> 4. **Your cost answers** from 3.2: list price per month (VM + disk + IP) and what you'd actually pay, and why.
+> 5. **Screenshot C:** the activity log from 4.2, showing your account creating the VM and deleting the resource group.
+> 6. **Short answers**, in your own words:
+>    - Why did you have to open port 80?
+>    - What did `nproc` print, and what does that number mean?
+>    - What disappeared when you deleted the resource group?
+>    - Which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We cover NIST in the lecture on 12 October, before the deadline.
 
 | Item | Required |
 |---|:-:|
-| Live check: page on your own IP with today's word + one answer | gate (pass/fail) |
-| Report: region, size, time, IP (matches the live check), cost answers | ✓ |
-| Proof of cleanup (screenshot) | ✓ |
-| NIST reflection (3+ characteristics, tied to your own numbers) | ✓ |
+| Your data and screenshots A–C, consistent with each other (same IP, times, your account) | ✓ |
+| Cost answers (list price vs. what you'd pay) | ✓ |
+| Short answers, using your own numbers | ✓ |
 
-*Your answers are about **your** run: your region, your time, your price. Two identical reports will both be checked again in person.*
+*Your report is about **your** run: your IP, your times, your account in the activity log. Reports that don't match each other or look copied will be checked again, and I may ask you to walk me through your report.*
