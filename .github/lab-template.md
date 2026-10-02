@@ -44,23 +44,22 @@ command --flag value
 >
 > What the student writes down from this step.
 
-## Part 2 — Show it, then delete it · ~8 min
+## Part 2 — Delete it and prove it · ~8 min
 
-### 2.1 Live check
-
-What the student shows in class, and an example question.
-
-### 2.2 Delete everything
+### 2.1 Delete everything
 
 > [!WARNING]
 > **Why this matters**
 >
 > What keeps costing money if it is not deleted.
 
+### 2.2 Proof
+
+What the student captures to show it was their own run (e.g. the activity log with their account).
+
 ## Submission · by DATE
 
 > [!IMPORTANT]
 > **To Merlin**
 >
-> - `labNN_<surname>.pdf` with: …
-> - **Live check** done in class. Without it the lab is not accepted.
+> `labNN_<surname>.pdf` with: your own data, screenshots, short answers.
