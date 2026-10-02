@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/Docker-in--Docker-0E1116?style=flat-square&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/Azure-for%20Students-0E1116?style=flat-square&logo=microsoftazure&logoColor=white" alt="Azure for Students">
   <img src="https://img.shields.io/badge/semester-2026%2F27-E82028?style=flat-square" alt="Semester 2026/27">
+  <a href="https://github.com/aprojic/Cloud-Computing/actions/workflows/checks.yml"><img src="https://img.shields.io/github/actions/workflow/status/aprojic/Cloud-Computing/checks.yml?branch=main&style=flat-square&label=checks" alt="Checks"></a>
 </p>
 
 Lab environment for **IT sustavi u oblaku / Cloud IT Systems** at Aspira University of Applied Sciences, Split.
@@ -63,11 +64,18 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 
 </details>
 
+## 💬 Questions and problems
+
+- A step doesn't work, or something is unclear? **[Open an issue](https://github.com/aprojic/Cloud-Computing/issues/new/choose)** and pick a form. Issues are public, so never paste passwords or keys.
+- Want to fix it yourself? See **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+- Grades, submissions and deadlines: Merlin or email.
+
 ## 📄 License
 
 - **Lab instructions and text:** [CC BY 4.0](LICENSE). Use and adapt them freely, also in your own teaching, as long as you credit *Ante Projić, Aspira University of Applied Sciences*.
 - **Code** (dev container, scripts, sample apps): [MIT](LICENSE-CODE).
 - The **Aspira name and logo** are trademarks of Veleučilište Aspira and are **not** covered by either license.
+- To cite these materials, use **Cite this repository** in the sidebar ([`CITATION.cff`](CITATION.cff)).
 
 ---
 
