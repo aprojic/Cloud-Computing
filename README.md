@@ -18,7 +18,7 @@ Lab instructions (EN + HR) are on **Merlin**. This repository holds the environm
 
 ## 🚀 Quick start
 
-| | Step | |
+| # | Do this | What you get |
 |:-:|---|---|
 | **1** | Click **Open in GitHub Codespaces** above | or *Code → Codespaces → Create codespace on main* |
 | **2** | Wait a minute or two for the environment to build | Ubuntu 24.04 + Docker, the same OS as the Azure VM in Lab 01 |
@@ -33,10 +33,10 @@ Lab instructions (EN + HR) are on **Merlin**. This repository holds the environm
 |:-:|---|---|---|
 | 00 | Set up your cloud | Azure for Students | — |
 | 01 | Your first server in the cloud (IaaS) | Azure Cloud Shell | [`lab-01-plan-b/`](lab-01-plan-b/), the same lab in Codespaces, **only when told to use Plan B** |
-| 02 | Same app, different model (PaaS) | Azure App Service | 🔜 |
-| 03–05 | Containers with Docker | Codespaces | 🔜 |
-| 06 | Containers in the cloud | Azure Container Apps | 🔜 |
-| 07 | AI in the cloud | Codespaces + model APIs | 🔜 |
+| 02 | Same app, different model (PaaS) | Azure App Service | *coming soon* |
+| 03–05 | Containers with Docker | Codespaces | *coming soon* |
+| 06 | Containers in the cloud | Azure Container Apps | *coming soon* |
+| 07 | AI in the cloud | Codespaces + model APIs | *coming soon* |
 
 ## 🧰 What's inside
 
