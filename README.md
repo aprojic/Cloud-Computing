@@ -14,7 +14,7 @@
 </p>
 
 Lab environment for **IT sustavi u oblaku / Cloud IT Systems** at Aspira University of Applied Sciences, Split.
-Lab instructions (EN + HR) are on **Merlin**. This repository holds the environment and the code the labs use.
+Every lab's instructions live here, and the same text is on **Merlin** as a PDF. You **submit on Merlin**.
 
 ## 🚀 Quick start
 
@@ -29,10 +29,10 @@ Lab instructions (EN + HR) are on **Merlin**. This repository holds the environm
 
 ## 🧪 Labs
 
-| # | Lab | Runs on | In this repo |
+| # | Lab | Runs on | Notes |
 |:-:|---|---|---|
-| 00 | Set up your cloud | Azure for Students | — |
-| 01 | Your first server in the cloud (IaaS) | Azure Cloud Shell | [`lab-01-plan-b/`](lab-01-plan-b/), the same lab in Codespaces, **only when told to use Plan B** |
+| 00 | [Set up your cloud](lab-00-setup/README.md) | Azure for Students | at home, before Lab 01 |
+| 01 | [Your first server in the cloud (IaaS)](lab-01-first-server/README.md) | Azure Cloud Shell | Plan B in Codespaces: [plan-b.md](lab-01-first-server/plan-b.md), only when told |
 | 02 | Same app, different model (PaaS) | Azure App Service | *coming soon* |
 | 03–05 | Containers with Docker | Codespaces | *coming soon* |
 | 06 | Containers in the cloud | Azure Container Apps | *coming soon* |
@@ -62,6 +62,12 @@ Lab instructions (EN + HR) are on **Merlin**. This repository holds the environm
 | Out of free hours | Delete codespaces you don't use. Verified students get more hours with the [GitHub Student Developer Pack](https://education.github.com/pack). |
 
 </details>
+
+## 📄 License
+
+- **Lab instructions and text:** [CC BY 4.0](LICENSE). Use and adapt them freely, also in your own teaching, as long as you credit *Ante Projić, Aspira University of Applied Sciences*.
+- **Code** (dev container, scripts, sample apps): [MIT](LICENSE-CODE).
+- The **Aspira name and logo** are trademarks of Veleučilište Aspira and are **not** covered by either license.
 
 ---
 

@@ -1,10 +1,10 @@
 # Lab 01 — Plan B: your first server in GitHub Codespaces
 
-Use this **only if told to in class**, when Azure isn't working. It's the same lab as on Merlin: same goal, same live check, same cleanup. Only the place your server runs is different. Fix your name and the word of the day exactly as in the main instructions.
+Use this **only if told to in class**, when Azure isn't working. It's the same lab as the [main instructions](README.md): same goal, same live check, same cleanup. Only the place your server runs is different. Put your name and the word of the day on the page exactly as in the main instructions.
 
 ## 1. Start your machine (~5 min)
 
-Click **Open in GitHub Codespaces** on the [main page](../README.md), or use **Code → Codespaces → Create codespace on main**. You don't need a fork for this lab. Open the terminal (**Ctrl + `**) once it's ready.
+Click **Open in GitHub Codespaces** on the [repository's main page](../README.md), or use **Code → Codespaces → Create codespace on main**. You don't need a fork for this lab. Open the terminal (**Ctrl + `**) once it's ready.
 
 ## 2. Make it a web server (~10 min)
 
