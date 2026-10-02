@@ -1,9 +1,9 @@
 <p align="center">
-  <img src=".github/banner.png" alt="ITSuO Labs — Cloud IT Systems at Aspira University of Applied Sciences" width="100%">
+  <img src=".github/banner.png" alt="Cloud Computing — hands-on cloud labs at Aspira University of Applied Sciences" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://codespaces.new/aprojic/ITSuO-labs?quickstart=1"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" height="32"></a>
+  <a href="https://codespaces.new/aprojic/Cloud-Computing?quickstart=1"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" height="32"></a>
 </p>
 
 <p align="center">
