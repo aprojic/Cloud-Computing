@@ -1,33 +1,78 @@
 <!-- kicker: Lab 00 · setup -->
 # Lab 00 — Set Up Your Cloud
 
-*Your own Azure subscription with $100 credit, a terminal in the browser, and the regions you're allowed to use. Set it up once and use it all semester.*
+*A Linux machine with Docker in your browser for the container labs, and your own Azure subscription for the real-cloud labs. Set it up once and use it all semester.*
 
-`~20–30 min` · `Azure for Students · Cloud Shell · GitHub` · `once, at home` · `prerequisite for Lab 01`
+`~30 min` · `GitHub · Codespaces · Azure for Students` · `once, at home` · `prerequisite for Lab 01`
 
 ## Why
 
-In this course you work on **real cloud infrastructure**, not a simulation: you create servers, apps and containers in a Microsoft data centre and delete them again. For that you need your own subscription. **Azure for Students** gives you one with no credit card. When the credit runs out the subscription is switched off and you are never billed. Everything runs in the browser, so you don't need to install anything.
+The first labs teach **containers**, the way almost all cloud software is packaged and shipped today. You run them in **GitHub Codespaces**: a Linux machine in a data centre, with Docker installed, opened in your browser. Later in the semester (Lab 04) you rent a real server in a Microsoft data centre, and for that you need your own **Azure for Students** subscription. Neither needs a credit card, and you don't need to install anything.
 
 ## Outcomes
 
-- Activate an Azure for Students subscription with your Aspira email.
-- Open Azure Cloud Shell and run your first `az` command.
-- Find the regions your subscription is allowed to use, and test one.
-- (For later labs) Set up GitHub and apply for the student benefits.
+- Open a codespace from the course repository and run your first container.
+- Apply for the GitHub Student Developer Pack (more free Codespaces hours).
+- Activate an Azure for Students subscription with your Aspira email, and find the regions it allows (needed for Lab 04).
 
 ## Prerequisites
 
-- [ ] Access to your **@aspira.hr** mailbox (you'll receive a verification email).
+- [ ] Access to your **@aspira.hr** mailbox (you'll receive verification emails).
 - [ ] A computer with a modern browser (Chrome, Edge, Firefox or Safari).
 - [ ] Your phone (you may be asked to verify a phone number or set up sign-in security).
 
 > [!TIP]
 > **Copy commands from this GitHub page** (copy button at the top right of each code block), not from the PDF. PDF viewers often break multi-line commands.
 
-> **Do this at home, before Monday 5 October.** Activation sometimes takes a while, and in class there's no time to wait for it.
+> **Part A before Monday 5 October** (Lab 01). Part B can wait until Lab 04 on 16 November, but student verification sometimes takes days, so start it now. If you already activated Azure this week, Part B is done.
 
-## Part 1 — Activate Azure for Students · ~10 min
+## Part A — GitHub and Codespaces (needed for Lab 01) · ~15 min
+
+### A.1 Your GitHub account
+
+Create an account at <https://github.com>, or use the one you have. Add your **@aspira.hr** email under *Settings → Emails*. Pick a username you're happy to show: it appears in your lab reports.
+
+### A.2 Open a codespace and run a container
+
+1. Open the course repository <https://github.com/aprojic/Cloud-Computing> and click **Open in GitHub Codespaces**, then **Create new codespace**. The first start takes a minute or two.
+2. When VS Code opens in the browser, open a terminal: menu **☰ → Terminal → New Terminal**.
+3. Run:
+
+```bash
+docker run --rm alpine echo "Hello from a container"
+```
+
+> [!NOTE]
+> **Expected output**
+>
+> ```
+> Unable to find image 'alpine:latest' locally
+> latest: Pulling from library/alpine
+> ...
+> Status: Downloaded newer image for alpine:latest
+> Hello from a container
+> ```
+>
+> The last line is what matters. You'll learn what the rest means in Lab 01.
+
+4. **Stop the codespace** when you're done: <https://github.com/codespaces> → **⋯** next to it → **Stop codespace**. A running codespace uses your free monthly hours even when you're not looking at it. (It also stops by itself after 30 minutes without activity.)
+
+> [!TIP]
+> **Common pitfalls**
+>
+> - **`Cannot connect to the Docker daemon`**: Docker is still starting. Wait 30 seconds and try again.
+> - **No "Open in GitHub Codespaces" button?** Use **Code → Codespaces → Create codespace on main**.
+> - **GitHub says you reached your Codespaces usage limit:** you've used up the free monthly hours. Delete codespaces you don't need at <https://github.com/codespaces>.
+
+### A.3 Apply for the GitHub Student Developer Pack
+
+Apply at <https://education.github.com/pack> with your @aspira.hr email. Verified students get more free Codespaces hours (the same as GitHub Pro) and other offers we use later, such as LocalStack for AWS. Verification can take a few days.
+
+## Part B — Azure for Students (needed for Lab 04) · ~15 min
+
+In Lab 04 you rent a virtual machine in Azure. Azure for Students gives you $100 credit with **no credit card**. When the credit runs out the subscription is switched off and you are never billed.
+
+### B.1 Activate Azure for Students
 
 1. Open <https://aka.ms/azure4students> and click **Start free**.
 2. Sign in with a Microsoft account, or create one. When asked to verify your academic status, use your **@aspira.hr** address and confirm the email you receive.
@@ -42,11 +87,11 @@ In this course you work on **real cloud infrastructure**, not a simulation: you 
 > [!TIP]
 > **Common pitfalls**
 >
-> - **"You're not eligible"**: the offer is for full-time students aged 18+, verified through the school email. If you're a part-time student or the verification fails, tell me before Lab 01. You'll do the lab on your own in GitHub Codespaces instead ([Plan B](../lab-01-first-server/plan-b.md)), so make sure Part 4 below works.
+> - **"You're not eligible"**: the offer is for full-time students aged 18+, verified through the school email. If you're a part-time student or the verification fails, tell me before Lab 04. You'll do that lab without Azure, so nothing is lost.
 > - **Already used the offer before** (e.g. at another school): one subscription per person. Tell me.
 > - You can check how much credit is left at <https://www.microsoftazuresponsorships.com/>.
 
-## Part 2 — Open Cloud Shell · ~5 min
+### B.2 Open Cloud Shell
 
 Cloud Shell is a Linux terminal in your browser with the Azure CLI (`az`) already installed and logged in. It's free.
 
@@ -70,7 +115,7 @@ az account show -o table
 > - An ephemeral session keeps **nothing**: files, variables and SSH keys are gone when it ends, after 20 minutes without activity. In the labs we only need the terminal, so that's fine.
 > - If Cloud Shell refuses to start with an error about a *resource provider*, open **Subscriptions → Azure for Students → Resource providers**, search for `Microsoft.CloudShell`, click **Register**, wait a minute and try again.
 
-## Part 3 — Find your allowed regions · ~5 min
+### B.3 Find your allowed regions
 
 Student subscriptions may only create resources in a small set of regions, usually about five, and **the list is different for each student**. If you use a region that isn't on your list, every lab command fails with `RequestDisallowedByAzure` or `RequestDisallowedByPolicy`.
 
@@ -87,7 +132,7 @@ az vm list-skus --location $LOC --size Standard_B2ats_v2 --query "[].restriction
 az group delete --name lab0-test --yes
 ```
 
-The network test matters because the region policy is checked when a **resource** is created, not the group. The `list-skus` line checks that the VM size we use in Lab 01 is available to you there.
+The network test matters because the region policy is checked when a **resource** is created, not the group. The `list-skus` line checks that the VM size we use in Lab 04 is available to you there.
 
 Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swedencentral`, `italynorth`. Your list may look completely different (e.g. `eastus`, `centralindia`), and that's fine. Run `az account list-locations -o table` to see how each display name maps to its short name.
 
@@ -107,22 +152,21 @@ Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swe
 >
 > **`syntax error near unexpected token`?** You left `<` `>` in a command. Replace the whole placeholder, brackets included.
 
-## Part 4 — GitHub (needed from Lab 03, start now) · ~5 min
-
-From November we work with containers in **GitHub Codespaces**. Student verification can take a few days, so apply now.
-
-1. Create a GitHub account at <https://github.com>, or use the one you have, and add your **@aspira.hr** email under *Settings → Emails*.
-2. Apply for the **GitHub Student Developer Pack** at <https://education.github.com/pack>. Verified students get more free Codespaces hours (the same as GitHub Pro) and many other offers.
-
-## Check — are you ready for Lab 01
+## Check — are you ready
 
 > [!IMPORTANT]
-> **Must work**
+> **For Lab 01 (Monday 5 October)**
+>
+> - [ ] You can open a codespace from the course repository, and `docker run --rm alpine echo "Hello from a container"` prints the greeting.
+> - [ ] You stopped the codespace afterwards.
+> - [ ] You applied for the GitHub Student Developer Pack.
+
+> [!IMPORTANT]
+> **For Lab 04 (Monday 16 November)**
 >
 > - [ ] **Subscriptions** shows *Azure for Students* as *Active*.
 > - [ ] Cloud Shell opens and `az account show -o table` shows *Enabled*.
 > - [ ] You have **your list of allowed regions** written down.
-> - [ ] In one of those regions the network test worked, `list-skus` printed nothing, and you deleted the test group. **Write this region down as your Lab 01 region.**
-> - [ ] (For Lab 03) GitHub account created and the student pack applied for.
+> - [ ] In one of those regions the network test worked, `list-skus` printed nothing, and you deleted the test group. **Write this region down as your Lab 04 region.**
 
-Lab 00 is not graded, but it is a **prerequisite** for Lab 01 (Monday 5 October). If something doesn't work, email me **before** the lab, not at the start of it, so we can solve it in time.
+Lab 00 is not graded, but Part A is a **prerequisite** for Lab 01. If something doesn't work, email me **before** the lab, not at the start of it, so we can solve it in time.

@@ -1,4 +1,4 @@
-# Lab 01 — Plan B: your first server in GitHub Codespaces
+# Lab 04 — Plan B: your first server in GitHub Codespaces
 
 Use this if you **can't use Azure for Students** (e.g. you're a part-time student), or when I announce Plan B for the whole class. It's the same lab as the [main instructions](README.md): same goal, same kind of report, same cleanup. Only the place your server runs is different.
 
@@ -16,7 +16,7 @@ sudo service nginx start
 
 > A codespace is a **container**, so there is no `systemctl`. That's why we use `service`.
 
-Open the **Ports** tab (next to *Terminal*). Port **80** appears as *nginx (Lab 01)*. Right-click it → **Port Visibility → Public**, then copy the **Forwarded Address** and open it in a browser (your phone works too). The page shows your GitHub username, your codespace name (it's also part of the address) and the time.
+Open the **Ports** tab (next to *Terminal*). Port **80** appears in the list. Right-click it → **Port Visibility → Public**, then copy the **Forwarded Address** and open it in a browser (your phone works too). The page shows your GitHub username, your codespace name (it's also part of the address) and the time.
 
 **Take Screenshot A now:** the browser with the **forwarded address in the address bar** and your page.
 
@@ -30,7 +30,7 @@ free -h
 cat /etc/os-release | head -2
 ```
 
-Remember these numbers and compare them with what the Azure VM in the main instructions would give you. Think about it: **is a codespace IaaS or PaaS?** Which layers do *you* manage here? (We cover the models in the lecture on 12 October, before the deadline.)
+Remember these numbers and compare them with what the Azure VM in the main instructions would give you. Think about it: **is a codespace IaaS or PaaS?** Which layers do *you* manage here? (We covered the models in the lecture on 12 October.)
 
 ## 4. What does it cost? (~3 min)
 
@@ -40,7 +40,7 @@ Find the **price per hour** of a 2-core codespace in the GitHub Codespaces billi
 
 Go to <https://github.com/codespaces> → **⋯** next to your codespace → **Delete**. Take **Screenshot C**: the list without it.
 
-## Submission (Merlin, by 19 October)
+## Submission (Merlin, by 30 November)
 
 Same as the main lab, with these changes:
 

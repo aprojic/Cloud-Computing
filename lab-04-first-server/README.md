@@ -1,5 +1,5 @@
-<!-- kicker: Lab 01 · IaaS · 5 October 2026 -->
-# Lab 01 — Your first server in the cloud
+<!-- kicker: Lab 04 · IaaS · 16 November 2026 -->
+# Lab 04 — Your first server in the cloud
 
 *Rent a Linux machine in a Microsoft data centre, make it serve your web page, find out what it costs, and delete it, all in 45 minutes.*
 
@@ -18,7 +18,7 @@ A small Split agency wants a web page online **tonight**. They have no servers a
 
 ## Prerequisites
 
-- [ ] **[Lab 00](../lab-00-setup/README.md) done:** Azure for Students is active, Cloud Shell works, and you have **your list of allowed regions**.
+- [ ] **[Lab 00](../lab-00-setup/README.md#part-b--azure-for-students-needed-for-lab-04--15-min), Part B done:** Azure for Students is active, Cloud Shell works, and you have **your list of allowed regions**.
 - [ ] A phone (or a second browser tab) to open your page.
 
 > [!TIP]
@@ -33,11 +33,11 @@ A small Split agency wants a web page online **tonight**. They have no servers a
 
 ### 1.1 Set your variables
 
-In Cloud Shell, set three variables. Change `swedencentral` to **your Lab 01 region** from Lab 00:
+In Cloud Shell, set three variables. Change `swedencentral` to **your Lab 04 region** from Lab 00, Part B:
 
 ```bash
 RG=lab1-rg
-LOC=swedencentral   # ← change to YOUR region from Lab 00
+LOC=swedencentral   # ← change to YOUR region from Lab 00, Part B
 VM=web1
 ```
 
@@ -177,7 +177,7 @@ The last command asks the **Azure Instance Metadata Service** about the machine 
 >     "zone": "",
 > ```
 
-Remember this number: **2** (or 1 on `B1s`). In an upcoming lecture you'll see a machine answer the same command with **48**, and we'll work out why.
+Remember this number: **2** (or 1 on `B1s`). Compare it with what `nproc` printed inside a container in Lab 01. Which number belongs to the machine, and which one did the container just borrow from its host?
 
 Type `exit` to leave the VM.
 
@@ -241,12 +241,12 @@ az monitor activity-log list -g $RG --offset 3h --status Succeeded --max-events 
 
 Take a screenshot of the table. This is how a cloud team answers "who created this server, and who deleted it?"
 
-## Submission · by 19 October, before Lab 02
+## Submission · by 30 November, before Lab 05
 
 > [!IMPORTANT]
 > **To Merlin**
 >
-> `lab01_<surname>.pdf` with:
+> `lab04_<surname>.pdf` with:
 >
 > 1. **Your data:** region, VM size, the `real` time from 1.3 and your public IP.
 > 2. **Screenshot A:** your page open in a browser, with **your IP in the address bar** and your name and server time on the page (2.3).
@@ -257,7 +257,7 @@ Take a screenshot of the table. This is how a cloud team answers "who created th
 >    - Why did you have to open port 80?
 >    - What did `nproc` print, and what does that number mean?
 >    - What disappeared when you deleted the resource group?
->    - Which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We cover NIST in the lecture on 12 October, before the deadline.
+>    - Which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We covered NIST in the lecture on 12 October.
 
 | Item | Required |
 |---|:-:|
