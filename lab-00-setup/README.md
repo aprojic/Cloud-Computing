@@ -121,7 +121,7 @@ Student subscriptions may only create resources in a small set of regions, usual
 
 1. In the portal search bar, type **Policy** and open it.
 2. Go to **Authoring → Assignments** and open **Allowed resource deployment regions**.
-3. Look at the **Allowed locations** parameter. **Write the list down.** You'll need it in every lab.
+3. Look at the **Allowed locations** parameter. **Write the list down.** You'll need it in Lab 04.
 4. Test one of them in Cloud Shell. Replace `swedencentral` with one of **your** regions. Everything here is free:
 
 ```bash
