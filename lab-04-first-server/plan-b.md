@@ -14,7 +14,7 @@ echo "<meta charset=utf-8><h1>Your Name</h1><p>$GITHUB_USER · $CODESPACE_NAME �
 sudo service nginx start
 ```
 
-> A codespace is itself a **container**, running on a VM that GitHub rents for you. That's why there is no `systemctl`. That's why we use `service`.
+> A codespace is itself a **container**, running on a VM that GitHub rents for you. That's why there is no `systemctl`, and we use `service` instead.
 
 Open the **Ports** tab (next to *Terminal*). Port **80** appears in the list. Right-click it → **Port Visibility → Public**, then copy the **Forwarded Address** and open it in a browser (your phone works too). The page shows your GitHub username, your codespace name (it's also part of the address) and the time.
 
