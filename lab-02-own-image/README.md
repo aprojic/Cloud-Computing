@@ -297,7 +297,7 @@ docker images
 > ghcr.io/yourname/hello-cloud:1.1   5c1f…               212MB           52MB
 > ```
 
-The image list was empty, and Docker pulled your image back from the registry. Reload the page in your browser: it shows *Greetings from…* again, from a container whose hostname is new.
+The image list was empty, and Docker pulled your image back from the registry. Some layers may say `Already exists`: Docker still had the Python base layers on disk and only downloaded what was missing. Reload the page in your browser: it shows *Greetings from…* again, from a container whose hostname is new.
 
 Now open your profile on GitHub → **Packages**. `hello-cloud` is there, **private** by default, so only you can pull it.
 
