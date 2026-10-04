@@ -22,8 +22,8 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 | # | Do this | Details |
 |:-:|---|---|
 | **1** | Open this week's lab in the table below | The instructions live here. The same text is on Merlin as a PDF. |
-| **2** | Work where the lab tells you to | Azure labs run in **Azure Cloud Shell** (in your browser). Container labs run in **GitHub Codespaces** (button above). Copy commands from these pages, not from the PDF. |
-| **3** | Show your result in class, then submit on Merlin | A lab is **accepted** when you pass the short live check in class **and** your report is on Merlin by the deadline. |
+| **2** | Work where the lab tells you to | Container labs run in **GitHub Codespaces** (button above). Azure labs run in **Azure Cloud Shell**. Both are in your browser. Copy commands from these pages, not from the PDF. |
+| **3** | Submit your report on Merlin by the deadline | Each lab tells you exactly what goes in: your own data, screenshots and short answers. You can finish a lab at home. |
 
 > [!TIP]
 > When a lab asks you to **save your work** in a codespace, fork the repo first (top right → **Fork**) and open the codespace from *your* fork. When new labs appear here, update your fork with **Sync fork → Update branch**.
@@ -32,11 +32,13 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 
 | # | Lab | Runs on | Notes |
 |:-:|---|---|---|
-| 00 | [Set up your cloud](lab-00-setup/README.md) | Azure for Students | at home, before Lab 01 |
-| 01 | [Your first server in the cloud (IaaS)](lab-01-first-server/README.md) | Azure Cloud Shell | Plan B in Codespaces: [plan-b.md](lab-01-first-server/plan-b.md), only when told |
-| 02 | Same app, different model (PaaS) | Azure App Service | *coming soon* |
-| 03–05 | Containers with Docker | Codespaces | *coming soon* |
-| 06 | Containers in the cloud | Azure Container Apps | *coming soon* |
+| 00 | [Set up your cloud](lab-00-setup/README.md) | GitHub Codespaces · Azure for Students | at home: Part A before Lab 01, Part B before Lab 04 |
+| 01 | [Your first container](lab-01-first-container/README.md) | Codespaces · Docker | |
+| 02 | Build your own image: Dockerfile, registry | Codespaces · GHCR | *coming soon* |
+| 03 | Many containers: Docker Compose | Codespaces | *coming soon* |
+| 04 | [Your first server in the cloud (IaaS)](lab-04-first-server/README.md) | Azure Cloud Shell | Plan B in Codespaces: [plan-b.md](lab-04-first-server/plan-b.md), only when told |
+| 05 | Containers in the cloud | LocalStack (AWS ECR + ECS) | *coming soon* |
+| 06 | Serverless and infrastructure as code | LocalStack · Terraform | *coming soon* |
 | 07 | AI in the cloud | Codespaces + model APIs | *coming soon* |
 
 ## 🧰 What's inside
