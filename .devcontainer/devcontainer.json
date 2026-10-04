@@ -7,6 +7,6 @@
   "hostRequirements": { "cpus": 2 },
   "forwardPorts": [80],
   "portsAttributes": {
-    "80": { "label": "nginx (Lab 01)", "onAutoForward": "notify" }
+    "80": { "label": "web", "onAutoForward": "notify" }
   }
 }
