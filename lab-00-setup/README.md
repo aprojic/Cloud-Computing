@@ -24,7 +24,7 @@ The first labs teach **containers**, the way almost all cloud software is packag
 > [!TIP]
 > **Copy commands from this GitHub page** (copy button at the top right of each code block), not from the PDF. PDF viewers often break multi-line commands.
 
-> **Part A before Monday 5 October** (Lab 01). Part B can wait until Lab 04 on 16 November, but student verification sometimes takes days, so start it now. If you already activated Azure this week, Part B is done.
+> **Part A before Lab 01.** Part B can wait until Lab 04, but student verification sometimes takes days, so start it now. If you already activated Azure this week, Part B is done.
 
 ## Part A — GitHub and Codespaces (needed for Lab 01) · ~15 min
 
@@ -162,7 +162,7 @@ Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swe
 ## Check — are you ready
 
 > [!IMPORTANT]
-> **For Lab 01 (Monday 5 October)**
+> **For Lab 01**
 >
 > - [ ] You can open a codespace from the course repository, and `docker run --rm alpine echo "Hello from a container"` prints the greeting.
 > - [ ] You stopped the codespace afterwards.
@@ -170,7 +170,7 @@ Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swe
 > - [ ] (Optional) You starred the repo and watch its releases.
 
 > [!IMPORTANT]
-> **For Lab 04 (Monday 16 November)**
+> **For Lab 04**
 >
 > - [ ] **Subscriptions** shows *Azure for Students* as *Active*.
 > - [ ] Cloud Shell opens and `az account show -o table` shows *Enabled*.

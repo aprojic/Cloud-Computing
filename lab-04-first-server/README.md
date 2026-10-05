@@ -1,4 +1,4 @@
-<!-- kicker: Lab 04 · IaaS · 16 November 2026 -->
+<!-- kicker: Lab 04 · IaaS -->
 # Lab 04 — Your first server in the cloud
 
 *Rent a Linux machine in a Microsoft data centre, make it serve your web page, find out what it costs, and delete it, all in 45 minutes.*
@@ -259,7 +259,7 @@ Submit on Merlin whenever you're ready. The only hard deadline: **all labs must 
 >    - Why did you have to open port 80?
 >    - What did `nproc` print, and what does that number mean?
 >    - What disappeared when you deleted the resource group?
->    - Which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). We covered NIST in the lecture on 12 October.
+>    - Which NIST characteristics did you experience in this lab, and where exactly? Name at least three and use **your own numbers** (time, price, IP). NIST is covered in Lecture 1.
 
 | Item | Required |
 |---|:-:|

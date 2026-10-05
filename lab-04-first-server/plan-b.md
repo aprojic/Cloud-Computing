@@ -30,7 +30,7 @@ free -h
 head -2 /etc/os-release
 ```
 
-In Lab 01 you ran nginx **inside a container** on a codespace. Today you installed it **on the codespace itself**, the way you would on a VM. Think about it: **is a codespace IaaS or PaaS?** Which layers do *you* manage here, and which ones does GitHub manage? (We covered the models in the lecture on 12 October.)
+In Lab 01 you ran nginx **inside a container** on a codespace. Today you installed it **on the codespace itself**, the way you would on a VM. Think about it: **is a codespace IaaS or PaaS?** Which layers do *you* manage here, and which ones does GitHub manage? (The service models are covered in Lecture 1.)
 
 ## 4. What would the VM cost? (~8 min)
 

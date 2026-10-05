@@ -1,4 +1,4 @@
-<!-- kicker: Lab 01 · Containers · 5 October 2026 -->
+<!-- kicker: Lab 01 · Containers -->
 # Lab 01 — Your first container
 
 *Start containers in a second, find out why they forget everything, serve your own web page from one, and learn what a container really sees of the machine it runs on.*
