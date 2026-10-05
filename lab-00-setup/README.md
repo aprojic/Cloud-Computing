@@ -68,6 +68,13 @@ docker run --rm alpine echo "Hello from a container"
 
 Apply at <https://education.github.com/pack> with your @aspira.hr email. Verified students get more free Codespaces hours (the same as GitHub Pro) and other offers we use later, such as LocalStack for AWS. Verification can take a few days.
 
+### A.4 Star and watch the course repository (optional, 1 min)
+
+On the [course repository](https://github.com/aprojic/Cloud-Computing), at the top right:
+
+1. Click **⭐ Star**. It's a bookmark: the repo then appears under *Your stars* in your profile, so you can always find the labs.
+2. Click **Watch → Custom**, tick **Releases** and click **Apply**. GitHub then emails you when a new lab is published. (A star alone doesn't send notifications.)
+
 ## Part B — Azure for Students (needed for Lab 04) · ~15 min
 
 In Lab 04 you rent a virtual machine in Azure. Azure for Students gives you $100 credit with **no credit card**. When the credit runs out the subscription is switched off and you are never billed.
@@ -160,6 +167,7 @@ Use the region's short name in lowercase without spaces, e.g. `westeurope`, `swe
 > - [ ] You can open a codespace from the course repository, and `docker run --rm alpine echo "Hello from a container"` prints the greeting.
 > - [ ] You stopped the codespace afterwards.
 > - [ ] You applied for the GitHub Student Developer Pack.
+> - [ ] (Optional) You starred the repo and watch its releases.
 
 > [!IMPORTANT]
 > **For Lab 04 (Monday 16 November)**
