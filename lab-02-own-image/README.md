@@ -22,7 +22,7 @@ The Split agency from Lab 01 now has a small Python app instead of a static page
 - [ ] Your GitHub account. You'll create a token in Part 4, so make sure you can log in to <https://github.com> in the browser.
 
 > [!TIP]
-> **Copy commands from this GitHub page** (copy button on each code block), not from the PDF. PDF viewers often break multi-line commands.
+> **Use the copy button** at the top right of each code block, so multi-line commands stay intact.
 
 ## Part 1 — It works on my machine · ~5 min
 

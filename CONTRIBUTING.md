@@ -21,7 +21,7 @@ A good fix to a lab instruction may be mentioned in class (with your permission)
 
 ## How lab instructions are written
 
-Each lab is one folder with a `README.md`, written in English. The same file is turned into the PDF on Merlin, so please keep the conventions from [`.github/lab-template.md`](.github/lab-template.md):
+Each lab is one folder with a `README.md`, written in English. Merlin links straight to these files, so please keep the conventions from [`.github/lab-template.md`](.github/lab-template.md):
 
 | Use | For |
 |---|---|

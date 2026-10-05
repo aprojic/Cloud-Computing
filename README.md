@@ -15,14 +15,14 @@
 </p>
 
 Lab environment for **IT sustavi u oblaku / Cloud IT Systems** at Aspira University of Applied Sciences, Split.
-Every lab's instructions live here, and the same text is on **Merlin** as a PDF. You **submit on Merlin**.
+Every lab's instructions live here, and Merlin links straight to them. You **submit on Merlin**.
 
 ## 🚀 How a lab works
 
 | # | Do this | Details |
 |:-:|---|---|
-| **1** | Open this week's lab in the table below | The instructions live here. The same text is on Merlin as a PDF. |
-| **2** | Work where the lab tells you to | Container labs run in **GitHub Codespaces** (button above). Azure labs run in **Azure Cloud Shell**. Both are in your browser. Copy commands from these pages, not from the PDF. |
+| **1** | Open this week's lab in the table below | The instructions live here; Merlin links to this page, so it's always the current version. |
+| **2** | Work where the lab tells you to | Container labs run in **GitHub Codespaces** (button above). Azure labs run in **Azure Cloud Shell**. Both are in your browser. Use the copy button on each code block. |
 | **3** | Submit your report on Merlin | Each lab tells you exactly what goes in: your own data, screenshots and short answers. You can finish a lab at home and submit any time, but all labs must be in before the first exam period. |
 
 > [!TIP]

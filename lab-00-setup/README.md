@@ -22,7 +22,7 @@ The first labs teach **containers**, the way almost all cloud software is packag
 - [ ] Your phone (you may be asked to verify a phone number or set up sign-in security).
 
 > [!TIP]
-> **Copy commands from this GitHub page** (copy button at the top right of each code block), not from the PDF. PDF viewers often break multi-line commands.
+> **Use the copy button** at the top right of each code block, so multi-line commands stay intact.
 
 > **Part A before Lab 01.** Part B can wait until Lab 04, but student verification sometimes takes days, so start it now. If you already activated Azure this week, Part B is done.
 
