@@ -1,4 +1,5 @@
-<!-- kicker: Lab NN · topic · date -->
+<!-- kicker: Lab NN · topic -->
+<!-- No calendar dates anywhere in a lab: the PDFs are uploaded to Merlin by hand. Refer to labs and lectures by number. -->
 # Lab NN — Title of the lab
 
 *One sentence on what students build or learn, shown under the title.*

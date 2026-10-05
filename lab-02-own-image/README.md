@@ -1,4 +1,4 @@
-<!-- kicker: Lab 02 · Containers · 19 October 2026 -->
+<!-- kicker: Lab 02 · Containers -->
 # Lab 02 — Build your own image
 
 *Package a small Python web app with a Dockerfile, run it anywhere Docker runs, see how layers make rebuilds fast, and publish the image to a registry so any machine can pull it.*

@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/Ubuntu-24.04-0E1116?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu 24.04">
   <img src="https://img.shields.io/badge/Docker-in--Docker-0E1116?style=flat-square&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/Azure-for%20Students-0E1116?style=flat-square" alt="Azure for Students">
-  <img src="https://img.shields.io/badge/semester-2026%2F27-E82028?style=flat-square" alt="Semester 2026/27">
+  <img src="https://img.shields.io/badge/license-CC%20BY%204.0-E82028?style=flat-square" alt="License: CC BY 4.0">
   <a href="https://github.com/aprojic/Cloud-Computing/actions/workflows/checks.yml"><img src="https://img.shields.io/github/actions/workflow/status/aprojic/Cloud-Computing/checks.yml?branch=main&style=flat-square&label=checks" alt="Checks"></a>
 </p>
 
