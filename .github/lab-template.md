@@ -57,7 +57,9 @@ command --flag value
 
 What the student captures to show it was their own run (e.g. the activity log with their account).
 
-## Submission · by DATE
+## Submission · any time before the first exam period
+
+Submit on Merlin whenever you're ready. The only hard deadline: **all labs must be in before the first exam period begins**, if you pass the course through the midterms or your seminar paper. Submitting within about two weeks works best, while the lab is still fresh and before the lectures build on it.
 
 > [!IMPORTANT]
 > **To Merlin**
