@@ -1,4 +1,4 @@
-<!-- kicker: Lab NN · topic · date -->
+<!-- kicker: Lab NN · topic (no calendar dates: PDFs are uploaded to Merlin by hand) -->
 # Lab NN — Title of the lab
 
 *One sentence on what students build or learn, shown under the title.*
