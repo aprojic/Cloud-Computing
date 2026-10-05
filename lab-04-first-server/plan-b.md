@@ -44,7 +44,7 @@ You didn't rent an Azure VM, but you can still price one. The pricing pages are 
 
 Go to <https://github.com/codespaces> → **⋯** next to your codespace → **Delete**. Take **Screenshot C**: the list without it.
 
-## Submission (Merlin, by 30 November)
+## Submission (Merlin, any time before the first exam period)
 
 `lab04_<surname>.pdf` with:
 

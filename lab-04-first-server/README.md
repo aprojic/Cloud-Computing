@@ -241,7 +241,9 @@ az monitor activity-log list -g $RG --offset 3h --status Succeeded --max-events 
 
 Take a screenshot of the table. This is how a cloud team answers "who created this server, and who deleted it?"
 
-## Submission · by 30 November, before Lab 05
+## Submission · any time before the first exam period
+
+Submit on Merlin whenever you're ready. The only hard deadline: **all labs must be in before the first exam period begins**, if you pass the course through the midterms or your seminar paper. Submitting within about two weeks works best, while the lab is still fresh and before the lectures build on it.
 
 > [!IMPORTANT]
 > **To Merlin**

@@ -271,7 +271,9 @@ Go to <https://github.com/codespaces> → **⋯** next to your codespace → **D
 >
 > A stopped codespace still takes up storage, and a running one uses your free core-hours even when you're not looking at it. When the free quota runs out, you can't open a codespace until next month.
 
-## Submission · by 19 October, before Lab 02
+## Submission · any time before the first exam period
+
+Submit on Merlin whenever you're ready. The only hard deadline: **all labs must be in before the first exam period begins**, if you pass the course through the midterms or your seminar paper. Submitting within about two weeks works best, while the lab is still fresh and before the lectures build on it.
 
 > [!IMPORTANT]
 > **To Merlin**

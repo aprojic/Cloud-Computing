@@ -330,7 +330,9 @@ Open <https://github.com/settings/tokens>, find `lab02` and click **Delete**. A 
 >
 > A running codespace uses your free core-hours, and a forgotten token keeps working until it expires.
 
-## Submission · by 2 November, before Lab 03
+## Submission · any time before the first exam period
+
+Submit on Merlin whenever you're ready. The only hard deadline: **all labs must be in before the first exam period begins**, if you pass the course through the midterms or your seminar paper. Submitting within about two weeks works best, while the lab is still fresh and before the lectures build on it.
 
 > [!IMPORTANT]
 > **To Merlin**
