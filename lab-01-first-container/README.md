@@ -22,7 +22,7 @@ A small Split agency wants a web page online **tonight**, and the developer who 
 - [ ] A phone (or a second browser tab) to open your page.
 
 > [!TIP]
-> **Copy commands from this GitHub page** (copy button on each code block), not from the PDF. PDF viewers often break multi-line commands.
+> **Use the copy button** at the top right of each code block, so multi-line commands stay intact.
 
 ## Part 1 — Images and containers · ~8 min
 

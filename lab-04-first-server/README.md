@@ -27,7 +27,7 @@ A small Split agency wants a web page online **tonight**. They have no servers a
 > If you can't use Azure for Students (e.g. you're a part-time student), do the same lab **on your own** in GitHub Codespaces: [plan-b.md](plan-b.md). You only need a GitHub account. If Azure fails for most of the class, I'll announce Plan B for everyone.
 
 > [!TIP]
-> **Copy commands from this GitHub page** (copy button on each code block), not from the PDF. PDF viewers often break multi-line commands.
+> **Use the copy button** at the top right of each code block, so multi-line commands stay intact.
 
 ## Part 1 — Rent a server · ~12 min
 
