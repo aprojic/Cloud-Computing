@@ -26,6 +26,9 @@ Every lab's instructions live here, and the same text is on **Merlin** as a PDF.
 | **3** | Submit your report on Merlin | Each lab tells you exactly what goes in: your own data, screenshots and short answers. You can finish a lab at home and submit any time, but all labs must be in before the first exam period. |
 
 > [!TIP]
+> **Get an email when a new lab is out:** **Watch → Custom → Releases** (top right). **⭐ Star** the repo to keep it in your bookmarks.
+
+> [!TIP]
 > When a lab asks you to **save your work** in a codespace, fork the repo first (top right → **Fork**) and open the codespace from *your* fork. When new labs appear here, update your fork with **Sync fork → Update branch**.
 
 ## 🧪 Labs
