@@ -35,7 +35,7 @@ cd ~/lab03
 ls
 ```
 
-You'll see four files. [`app.py`](app/app.py) is a Flask app like the one in Lab 02, but every visit adds one to a counter stored in Redis. [`Dockerfile`](app/Dockerfile) is the recipe you wrote in Lab 02. The new file is [`compose.yaml`](app/compose.yaml):
+You'll see four files. [`app.py`](app/app.py) is a Flask app like the one in Lab 02, but every visit adds one to a counter stored in Redis. [`Dockerfile`](app/Dockerfile) is almost the same recipe you wrote in Lab 02. The new file is [`compose.yaml`](app/compose.yaml):
 
 ```bash
 cat compose.yaml
@@ -124,7 +124,7 @@ Every name starts with `lab03`, the folder you're in: that's the **project name*
 >
 > - `no configuration file provided: not found`: you're not in `~/lab03`. Run `cd ~/lab03`.
 > - `Bind for 0.0.0.0:80 failed: port is already allocated`: a container from Lab 01 or 02 is still running on port 80. Remove it with `docker rm -f $(docker ps -q)` and run `docker compose up -d` again.
-> - The page says *Hello from nobody yet*: the `.env` file is missing or not in `~/lab03`. Fix it and run `docker compose up -d` again. Compose recreates only `web`.
+> - `The "STUDENT_NAME" variable is not set. Defaulting to a blank string.` and the page says *Hello from nobody yet*: the `.env` file is missing or not in `~/lab03`. Fix it and run `docker compose up -d` again. Compose recreates only `web`.
 
 ### 1.4 Open it in the browser
 

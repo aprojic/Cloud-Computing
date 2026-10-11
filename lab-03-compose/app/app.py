@@ -17,7 +17,7 @@ store = Redis(host=os.environ.get("REDIS_HOST", "redis"), port=6379)
 @app.route("/")
 def index():
     visits = store.incr("visits")
-    name = os.environ.get("STUDENT_NAME", "nobody yet")
+    name = os.environ.get("STUDENT_NAME") or "nobody yet"
     codespace = os.environ.get("CODESPACE_NAME") or "not set"
     return f"""<!doctype html>
 <meta charset="utf-8">
