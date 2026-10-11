@@ -78,6 +78,25 @@ volumes:
 | `healthcheck:` | How Docker checks that Redis is ready: run `redis-cli ping` every 2 s until it answers. |
 | `volumes: redis-data:/data` | Keep Redis's files in a **named volume** called `redis-data`, outside the container. |
 
+<details>
+<summary><b>The same app without Compose</b> (read, don't run)</summary>
+
+<br>
+
+```bash
+docker network create lab03_default
+docker volume create lab03_redis-data
+docker run -d --name redis --network lab03_default -v lab03_redis-data:/data redis:8-alpine
+# wait until Redis answers, by hand: no healthcheck does it for you
+docker build -t lab03-web .
+docker run -d --name web --network lab03_default -p 80:8000 \
+  -e STUDENT_NAME="Your Name" -e CODESPACE_NAME="$CODESPACE_NAME" lab03-web
+```
+
+Six commands in the right order, and the same again in reverse to delete it all. Forget `--network` on one of them and `web` can't find `redis`. Compose keeps all of this in one file that you can read, share and put in Git, and turns it into `up` and `down`.
+
+</details>
+
 > [!TIP]
 > **Older tutorials look different.** They often start with `version: "3.8"` and use the command `docker-compose` with a hyphen. Both are outdated: the `version:` line is ignored, and Compose is now part of Docker as `docker compose`. Use the form in this lab.
 
@@ -154,7 +173,7 @@ Make the page reachable: **Ports** tab → port **80** → right-click → **Por
 
 **Take Screenshot A now:** the browser with the **forwarded address in the address bar** and your page (your name, the visit count, the web container's hostname and your codespace name).
 
-## Part 2 — What Compose built for you · ~10 min
+## Part 2 — What Compose built for you · ~8 min
 
 ### 2.1 One network, one volume
 
@@ -219,15 +238,26 @@ Redis warns that anyone who can reach it can read and change the data, without a
 >
 > The network and volume names (2.1) and the IP address that `redis` resolves to (2.2).
 
-## Part 3 — Where does the state live? · ~13 min
+## Part 3 — Where does the state live? · ~17 min
 
-Three commands look similar but do very different things. Each time, check the counter **and** the web container's hostname:
+Four commands look similar but do very different things to your data. **Predict first, then check.**
+
+### 3.0 Predict
+
+Reload the page a few times and note the count. Then, **before you run anything below**, copy this table into your report and fill in the *Predicted visits* column: what will the counter show after each step? A wrong prediction is fine; you'll explain it later.
+
+| Step | Predicted visits | Actual visits | Web hostname | Same web container as before? |
+|---|---|---|---|---|
+| Before 3.1 (last count in the browser) | | | | |
+| After `restart` (3.1) | | | | |
+| After `down` + `up` (3.2) | | | | |
+| After `down -v` + `up` (3.3) | | | | |
+
+After each step, check the counter **and** the web container's hostname, and fill in the rest of the row:
 
 ```bash
 curl -s localhost | grep -E "Visits|hostname"
 ```
-
-Write the values into a table like the one at the end of this part.
 
 ### 3.1 Restart
 
@@ -236,7 +266,7 @@ docker compose restart
 curl -s localhost | grep -E "Visits|hostname"
 ```
 
-`restart` stops and starts the **same** containers. The hostname stays, and so does the count.
+`restart` stops and starts the **same** containers. Compare the hostname with the one before.
 
 ### 3.2 Down and up
 
@@ -252,12 +282,12 @@ curl -s localhost | grep -E "Visits|hostname"
 >
 > ```
 > [+] down 3/3
->  ✔ Container lab03-web-1   Removed                                          0.3s
->  ✔ Container lab03-redis-1 Removed                                          0.2s
+>  ✔ Container lab03-web-1   Removed                                          0.1s
+>  ✔ Container lab03-redis-1 Removed                                          0.1s
 >  ✔ Network lab03_default   Removed                                          0.1s
 > ```
 
-`down` **deletes** both containers and the network: `docker compose ps -a` shows only the header line. `up` creates brand new ones, so the web container's hostname is different. Check the count anyway.
+`down` **deletes** both containers and the network: `docker compose ps -a` shows only the header line. `up` creates brand new ones, so the web container's hostname is different. Did the count survive?
 
 ### 3.3 Down with volumes
 
@@ -271,17 +301,37 @@ curl -s localhost | grep -E "Visits|hostname"
 
 **Take Screenshot B now:** your terminal showing the three steps (3.1 to 3.3) with their `Visits` and hostname lines.
 
-| Step | Visits | Web hostname | Same container as before? |
-|---|---|---|---|
-| Before 3.1 (last count in the browser) | | | |
-| After `restart` | | | |
-| After `down` + `up` | | | |
-| After `down -v` + `up` | | | |
+### 3.4 Experiment: take the volume away
+
+Is it really the volume that keeps the count? Test it. Reload the page until the counter shows **at least 5** and note the number. Then delete the four `volumes` / `redis-data` lines from your copy of `compose.yaml` and apply the change:
+
+```bash
+sed -i '/redis-data/d; /^ *volumes:/d' compose.yaml
+cat compose.yaml
+docker compose up -d
+curl -s localhost | grep Visits
+```
+
+`cat` shows that `redis` has no `volumes:` any more. Compose noticed that `redis` changed and replaced only that container. Reload a few times, then do what you did in 3.2:
+
+```bash
+docker compose down
+docker compose up -d
+curl -s localhost | grep Visits
+```
+
+Now put the original file back and apply it once more:
+
+```bash
+cp /workspaces/Cloud-Computing/lab-03-compose/app/compose.yaml .
+docker compose up -d
+curl -s localhost | grep Visits
+```
 
 > [!IMPORTANT]
 > **In the report**
 >
-> This table, filled in with your values.
+> The table with both columns filled in, and the three `Visits` values from 3.4 (after the edit, after `down` + `up`, after putting the file back). Explain the last one: where was that number while the volume wasn't in `compose.yaml`?
 
 ## Part 4 — Clean up · ~5 min
 
@@ -316,16 +366,16 @@ Submit on Merlin whenever you're ready. The only hard deadline: **all labs must 
 >
 > 1. **Your data:** GitHub username, codespace name, the network and volume names and the `redis` IP address (Part 2).
 > 2. **Screenshot A:** your page in a browser, with the **forwarded address in the address bar** (1.4).
-> 3. **The table from Part 3** and **Screenshot B** (3.3).
+> 3. **The table from Part 3** (predicted and actual), **Screenshot B** (3.3) and **the three counts from 3.4**.
 > 4. **Short answers**, in your own words:
->    - The counter survived `down` but not `down -v`. Use your table to explain where the count was stored and why.
+>    - The counter survived `down` but not `down -v`. Use your table to explain where the count was stored and why. Which of your predictions were wrong, and what did you assume?
 >    - How did the `web` container find `redis` without an IP address? Why would a hard-coded IP address be a bad idea?
 >    - Redis warned that it has no password (2.3). Who can reach it in this app, and why? Which line in `compose.yaml` would change that?
 >    - What would happen if you ran `docker compose up -d --scale web=3` with this `compose.yaml`? Why?
 
 | Item | Required |
 |---|:-:|
-| Your data, table and screenshots A–B, consistent with each other (same codespace, hostnames, counts) | ✓ |
+| Your data, table, 3.4 counts and screenshots A–B, consistent with each other (same codespace, hostnames, counts) | ✓ |
 | Short answers, using your own outputs | ✓ |
 
 *Your report is about **your** run: your codespace, your containers, your counts. Reports that don't match each other or look copied will be checked again, and I may ask you to walk me through your report.*
