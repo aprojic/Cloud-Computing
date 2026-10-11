@@ -38,7 +38,7 @@ Every lab's instructions live here, and Merlin links straight to them. You **sub
 | 00 | [Set up your cloud](lab-00-setup/README.md) | GitHub Codespaces · Azure for Students | at home: Part A before Lab 01, Part B before Lab 04 |
 | 01 | [Your first container](lab-01-first-container/README.md) | Codespaces · Docker | |
 | 02 | [Build your own image](lab-02-own-image/README.md) | Codespaces · Docker · GHCR | |
-| 03 | Many containers: Docker Compose | Codespaces | *coming soon* |
+| 03 | [Many containers: Docker Compose](lab-03-compose/README.md) | Codespaces · Docker Compose | |
 | 04 | [Your first server in the cloud (IaaS)](lab-04-first-server/README.md) | Azure Cloud Shell | Plan B in Codespaces: [plan-b.md](lab-04-first-server/plan-b.md), only when told |
 | 05 | Containers in the cloud | LocalStack (AWS ECR + ECS) | *coming soon* |
 | 06 | Serverless and infrastructure as code | LocalStack · Terraform | *coming soon* |
@@ -48,7 +48,7 @@ Every lab's instructions live here, and Merlin links straight to them. You **sub
 
 - **Ubuntu 24.04** dev container ([`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json))
 - **Docker** inside the codespace (Docker-in-Docker), for the container labs
-- Port **80** forwarded automatically and labelled *web* (Labs 01–02)
+- Port **80** forwarded automatically and labelled *web* (Labs 01–03)
 - 2 CPU cores, which fits the free monthly Codespaces quota
 
 > [!WARNING]
