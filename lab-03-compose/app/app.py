@@ -1,6 +1,8 @@
 """A tiny web app for Lab 03: a visit counter that keeps its state in a second container (Redis)."""
 import os
+import signal
 import socket
+import sys
 
 from flask import Flask
 from redis import Redis
@@ -30,4 +32,7 @@ def index():
 
 
 if __name__ == "__main__":
+    # As the first process in a container, Python ignores "stop" (SIGTERM) unless told otherwise,
+    # and Docker would wait 10 s before killing it. Exit at once instead.
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
     app.run(host="0.0.0.0", port=8000)

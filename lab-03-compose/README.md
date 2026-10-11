@@ -105,12 +105,13 @@ docker compose ps
 > **Expected output (your values will differ)**
 >
 > ```
->  ✔ Image redis:8-alpine        Pulled
->  ✔ Image lab03-web             Built
->  ✔ Network lab03_default       Created
->  ✔ Volume lab03_redis-data     Created
->  ✔ Container lab03-redis-1     Healthy
->  ✔ Container lab03-web-1       Started
+> [+] up 15/15
+>  ✔ Image redis:8-alpine    Pulled                                           4.5s
+>  ✔ Image lab03-web         Built                                            1.4s
+>  ✔ Network lab03_default   Created                                          0.0s
+>  ✔ Volume lab03_redis-data Created                                          0.0s
+>  ✔ Container lab03-redis-1 Healthy                                          3.0s
+>  ✔ Container lab03-web-1   Started                                          2.7s
 > NAME            IMAGE            COMMAND                  SERVICE   CREATED         STATUS                   PORTS
 > lab03-redis-1   redis:8-alpine   "docker-entrypoint.s…"   redis     8 seconds ago   Up 7 seconds (healthy)   6379/tcp
 > lab03-web-1     lab03-web        "python app.py"          web       8 seconds ago   Up 2 seconds             0.0.0.0:80->8000/tcp, [::]:80->8000/tcp
@@ -141,7 +142,7 @@ curl -s localhost
 > <h1>Hello from Your Name</h1>
 > <ul>
 >   <li>Visits: <b>1</b></li>
->   <li>Web container (hostname): <code>c05794d983f9</code></li>
+>   <li>Web container (hostname): <code>0967c235c4fe</code></li>
 >   <li>Codespace: <code>fuzzy-space-giggle-x5r4…</code></li>
 > </ul>
 > ```
@@ -167,10 +168,10 @@ docker volume ls
 >
 > ```
 > NETWORK ID     NAME            DRIVER    SCOPE
-> 9b2f…          bridge          bridge    local
-> a164…          host            host      local
-> 7e01…          lab03_default   bridge    local
-> 1c3d…          none            null      local
+> 411ea992b282   bridge          bridge    local
+> 8a0c4127e978   host            host      local
+> 36271ae0b62a   lab03_default   bridge    local
+> 1ed2786be49d   none            null      local
 > DRIVER    VOLUME NAME
 > local     lab03_redis-data
 > ```
@@ -190,7 +191,7 @@ docker compose exec web getent hosts redis
 > **Expected output (your values will differ)**
 >
 > ```
-> 13:store = Redis(host=os.environ.get("REDIS_HOST", "redis"), port=6379)
+> 14:store = Redis(host=os.environ.get("REDIS_HOST", "redis"), port=6379)
 > 172.19.0.2      redis
 > ```
 
@@ -250,12 +251,13 @@ curl -s localhost | grep -E "Visits|hostname"
 > **Expected output of `down` (your values will differ)**
 >
 > ```
->  ✔ Container lab03-web-1    Removed
->  ✔ Container lab03-redis-1  Removed
->  ✔ Network lab03_default    Removed
+> [+] down 3/3
+>  ✔ Container lab03-web-1   Removed                                          0.3s
+>  ✔ Container lab03-redis-1 Removed                                          0.2s
+>  ✔ Network lab03_default   Removed                                          0.1s
 > ```
 
-`down` **deletes** both containers and the network: `docker compose ps -a` shows nothing. `up` creates brand new ones, so the web container's hostname is different. Check the count anyway.
+`down` **deletes** both containers and the network: `docker compose ps -a` shows only the header line. `up` creates brand new ones, so the web container's hostname is different. Check the count anyway.
 
 ### 3.3 Down with volumes
 
