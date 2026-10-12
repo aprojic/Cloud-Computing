@@ -9,6 +9,17 @@
 
 The agency's app from Lab 02 now counts visitors. A counter kept inside the web container would vanish every time the container is replaced (remember `/note.txt` in Lab 01), so the count lives in a second container: **Redis**, a small, fast database. Two containers mean two `docker run` commands with the right network, names, ports, variables and volume, in the right order, every time. Instead, you'll describe the whole app once in a `compose.yaml` file and start it with one command.
 
+## Key ideas
+
+Real apps are rarely one container. Even a small one has a web part and a place for its data, and they have to start in the right order, find each other and keep the data safe while containers come and go.
+
+- **Stateless and stateful.** The `web` container keeps nothing it can't lose, so it can be replaced or copied at any moment. The state, here a visit counter, lives in a database. Clouds scale the stateless parts freely and treat the stateful ones with care.
+- **Declarative.** `compose.yaml` describes *what* should exist: services, ports, variables, volumes. Compose works out *how*: what to create, in which order, and what to change when the file changes. You'll meet the same idea in Kubernetes and Terraform.
+- **Service discovery.** Containers in one Compose project share a network, and Docker's built-in DNS turns a service name like `redis` into the current IP address of its container. Names stay the same, IP addresses don't.
+- **Lifecycle.** Containers, networks and volumes are separate objects with separate lives. Part 3 asks you to predict which of them each command removes, before you check.
+
+Compose runs everything on one machine. What happens when one machine isn't enough is the topic of Lecture 4.
+
 ## Learning outcomes
 
 - Read a **`compose.yaml`** file and explain what each part does: services, build, ports, environment, volumes, healthcheck.
@@ -387,6 +398,14 @@ docker volume ls
 > **Why this matters**
 >
 > A running codespace uses your free core-hours. With Compose it's easy to leave several containers running without noticing.
+
+## Where this shows up
+
+- **Local development.** Many teams keep a `compose.yaml` next to the code, so a new developer starts the whole app, database included, with one command.
+- **Orchestrators.** Kubernetes uses the same declarative idea across many machines: you describe the services, it keeps them running.
+- **Managed databases.** In production the stateful part often moves out of containers into a managed service such as Amazon RDS or Azure Cache for Redis, so the provider handles backups and failover.
+
+Reference, if you want the official version: Docker's [Compose file reference](https://docs.docker.com/reference/compose-file/), [Networking in Compose](https://docs.docker.com/compose/how-tos/networking/), [Startup order](https://docs.docker.com/compose/how-tos/startup-order/) and [Volumes](https://docs.docker.com/engine/storage/volumes/).
 
 ## Submission · any time before the first exam period
 

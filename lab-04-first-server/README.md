@@ -9,6 +9,21 @@
 
 A small Split agency wants a web page online **tonight**. They have no servers and no budget to buy one. You are going to rent one by the hour, put the page on it, show the client that it works from a phone, tell them what it would cost per month, and then switch everything off so it costs nothing.
 
+## Key ideas
+
+In Labs 01–03 the machine under your containers was GitHub's. Now you rent the machine itself: **Infrastructure as a Service (IaaS)**, the oldest and most flexible way to use a cloud.
+
+- **Who manages what.** In IaaS the provider runs the data centre, the hardware, the network and the hypervisor. You get a virtual machine and manage everything from the operating system up: updates, software, open ports, your data.
+
+![Who manages which layer on-premises, in IaaS, PaaS and SaaS](img/who-manages.png)
+
+- **A VM is several resources.** The compute (its size: vCPUs and memory), an OS disk, a network interface, a public IP and a firewall (a network security group). Each one is created, billed and deleted on its own, and a **resource group** keeps them together.
+- **Everything is an API call.** The portal, Cloud Shell and the `az` CLI all call the same API. That's what makes *on-demand self-service* possible: the command that creates one VM can create a hundred, without a ticket or a phone call.
+- **Pay while it exists.** Compute is billed while the VM is allocated, and the disk and the IP cost money even when it's off. Only deleting stops every charge.
+- **Every change is recorded.** The provider logs who created, changed or deleted what, and when, in the **activity log**.
+
+Where you'll see each idea: the resource group and VM in Part 1, the firewall in 2.1, the machine you got in 3.1, the price in 3.2, deleting and the audit trail in Part 4. NIST's characteristics and the service models are from Lecture 1, VMs and hypervisors from Lecture 2.
+
 ## Learning outcomes
 
 - Provision a virtual machine yourself, without a ticket or a phone call (*on-demand self-service*).
@@ -240,6 +255,14 @@ az monitor activity-log list -g $RG --offset 3h --status Succeeded --max-events 
 > The delete can take a few minutes to show up. If it isn't listed yet, wait 2–3 minutes and run the command again.
 
 Take a screenshot of the table. This is how a cloud team answers "who created this server, and who deleted it?"
+
+## Where this shows up
+
+- **Same model, every provider.** AWS EC2 and Google Compute Engine work the same way: a size, a disk, a network, a firewall and a public IP, billed while they exist.
+- **Infrastructure as code.** Teams don't type `az vm create` by hand. They describe VMs in files and let a tool like Terraform create them, as you'll do in Lab 06.
+- **Scaling out.** VM scale sets (Azure) and auto scaling groups (AWS) add and remove identical VMs as the load changes, which is *rapid elasticity* in practice.
+
+Reference, if you want the official version: Microsoft's [Virtual machines in Azure](https://learn.microsoft.com/en-us/azure/virtual-machines/overview), [Shared responsibility in the cloud](https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility), [Network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview), [VM states and billing](https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing) and [Activity log](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/activity-log).
 
 ## Submission · any time before the first exam period
 
