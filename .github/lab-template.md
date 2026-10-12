@@ -12,7 +12,7 @@ A short, concrete situation that explains why this lab matters.
 
 ## Key ideas
 
-The theory behind the lab, readable in about 3 minutes: the problem, then 3–4 bullets that name the concepts (bold), one figure from the lecture in `img/`, and a closing line on which part shows which idea.
+The theory behind the lab, readable in about 3 minutes: the problem, then 3–4 bullets that name the concepts (bold), one figure from a lecture in `img/` if a lecture has a fitting one, and a closing line on which part shows which idea.
 
 ![What the figure shows](img/figure.png)
 

@@ -9,6 +9,18 @@
 
 The Split agency from Lab 01 now has a small Python app instead of a static page. It runs on the developer's laptop, but the server they want to use doesn't even have Python installed. You are going to write the recipe that turns the app into an image, run it, change it and rebuild it, and push it to a registry so the server (or anyone you allow) can pull exactly the same thing.
 
+## Key ideas
+
+In Lab 01 you ran images that someone else built. Real work starts when you build your own, because only then does your app travel with exactly the runtime and libraries it was tested with.
+
+- A **Dockerfile** is the recipe for an image, written as plain text. Anyone with the same Dockerfile and files gets the same image, and because it's text, it can be reviewed and kept in Git like code.
+- An image is a stack of read-only **layers**, one per instruction, on top of a **base image** (here `python:3.14-slim`). Layers are shared: ten images built on the same base store the base once.
+- The **build cache** reuses a layer when its instruction and everything before it are unchanged. Put what changes rarely (the libraries) before what changes often (your code), and rebuilds take seconds.
+- Images are **immutable**. You don't fix a running container: you build a new version with a new **tag**, start it and remove the old one. The old version still exists, so going back is one command.
+- A **registry** stores images under a full name that says where they live: `ghcr.io/user/app:1.1`. Build once, push, and every server pulls exactly the same bytes. Pushing needs credentials, so they get the smallest scope and the shortest life that work. Anything copied into an image stays in its layers for good, which is why a token never goes into one.
+
+Where you'll see each idea: the Dockerfile in Part 2, layers and the cache in 2.3 and 3.2, versions side by side in 3.3, the registry and its token in Part 4. Lecture 2 explained what a container is; this lab is about how one is made.
+
 ## Learning outcomes
 
 - Write a **Dockerfile** and explain what each instruction does.
@@ -329,6 +341,14 @@ Open <https://github.com/settings/tokens>, find `lab02` and click **Delete**. A 
 > **Why this matters**
 >
 > A running codespace uses your free core-hours, and a forgotten token keeps working until it expires.
+
+## Where this shows up
+
+- **Every push builds an image.** CI pipelines such as GitHub Actions build the image from the Dockerfile on every commit, tag it with a version and push it to a registry.
+- **Cloud registries.** AWS ECR, Azure Container Registry and Google Artifact Registry work like GHCR, next to the services that run the images. Lab 05 pushes an image to ECR on an emulated AWS.
+- **Image scanning.** Registries check the layers of an image for libraries with known vulnerabilities, one more reason to keep images small and rebuild them often.
+
+Reference, if you want the official version: Docker's [Dockerfile reference](https://docs.docker.com/reference/dockerfile/), [Build cache](https://docs.docker.com/build/cache/) and [Building best practices](https://docs.docker.com/build/building/best-practices/), and GitHub's [Working with the Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
 
 ## Submission · any time before the first exam period
 

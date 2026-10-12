@@ -286,7 +286,7 @@ Go to <https://github.com/codespaces> → **⋯** next to your codespace → **D
 
 ## Where this shows up
 
-- **Running containers without a server.** Google Cloud Run, AWS Fargate and Azure Container Apps take your image and run it, so you never see a VM. Lab 05 runs your image this way on an emulated AWS.
+- **Running containers without a server.** Google Cloud Run, AWS Fargate and Azure Container Apps take your image and run it, so you never see a VM. Lab 05 runs a container image this way on an emulated AWS.
 - **Many containers on many machines.** Kubernetes decides where each container runs and restarts it when it fails.
 - **Development and CI.** Your codespace is a dev container, and GitHub Actions can run build and test jobs inside containers.
 
