@@ -9,6 +9,19 @@
 
 A small Split agency wants a web page online **tonight**, and the developer who built it says "it works on my machine". You are going to package the server so it runs the same way everywhere, show the client the page from a phone, check what the package can and can't see of the machine under it, and then clean up so nothing keeps running.
 
+## Key ideas
+
+An app never runs alone. It needs a language runtime, libraries and settings, and the next machine always has slightly different ones: that's "it works on my machine". A **container** ships the app together with everything it needs and runs it the same way on any Linux machine with Docker.
+
+- An **image** is the package: a read-only file system (a small Linux, the libraries, the app) plus the command that starts it. Images are stored in a **registry**. `docker run alpine` pulls `alpine` from Docker Hub, the default one.
+- A **container** is a running copy of an image: an ordinary Linux process with a thin writable layer on top. You can start many containers from one image, and each one starts clean.
+- The isolation comes from two features of the Linux kernel. **Namespaces** decide what a process can *see*: its own files, process list and network. **cgroups** decide how much it can *use*: CPU and memory.
+- A **virtual machine** (Lab 04) boots its own kernel on a hypervisor. A container has no kernel of its own and shares the host's, so nothing boots and it starts in a fraction of a second. The price is weaker isolation: a bug in the shared kernel affects every container on that host.
+
+![A VM boots its own kernel on a hypervisor; containers share the host kernel; your codespace is a container on a Linux VM](img/vm-vs-container.png)
+
+Clouds stack both: your codespace is itself a container on a Linux VM, and today you run containers inside it. Each idea above shows up in one part of this lab: images and registries in Part 1, the writable layer in Part 2, namespaces in 1.3 and 3.4, cgroups in Part 4. Lecture 2 goes deeper.
+
 ## Learning outcomes
 
 - Explain the difference between an **image** and a **container**, and run, list, inspect and remove both.
@@ -270,6 +283,14 @@ Go to <https://github.com/codespaces> → **⋯** next to your codespace → **D
 > **Why this matters**
 >
 > A stopped codespace still takes up storage, and a running one uses your free core-hours even when you're not looking at it. When the free quota runs out, you can't open a codespace until next month.
+
+## Where this shows up
+
+- **Running containers without a server.** Google Cloud Run, AWS Fargate and Azure Container Apps take your image and run it, so you never see a VM. Lab 05 runs your image this way on an emulated AWS.
+- **Many containers on many machines.** Kubernetes decides where each container runs and restarts it when it fails.
+- **Development and CI.** Your codespace is a dev container, and GitHub Actions can run build and test jobs inside containers.
+
+Reference, if you want the official version: Docker's [What is a container?](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/), [What is an image?](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-an-image/), [What is a registry?](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-registry/) and [Resource constraints](https://docs.docker.com/engine/containers/resource_constraints/).
 
 ## Submission · any time before the first exam period
 

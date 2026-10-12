@@ -10,6 +10,12 @@
 
 A short, concrete situation that explains why this lab matters.
 
+## Key ideas
+
+The theory behind the lab, readable in about 3 minutes: the problem, then 3–4 bullets that name the concepts (bold), one figure from the lecture in `img/`, and a closing line on which part shows which idea.
+
+![What the figure shows](img/figure.png)
+
 ## Learning outcomes
 
 - What students can do after the lab (3–4 bullets, start with a verb).
@@ -57,6 +63,12 @@ command --flag value
 ### 2.2 Proof
 
 What the student captures to show it was their own run (e.g. the activity log with their account).
+
+## Where this shows up
+
+- 2–3 bullets on where this is used in real clouds, linked to later labs where possible.
+
+Reference, if you want the official version: 2–4 links to official documentation.
 
 ## Submission · any time before the first exam period
 
