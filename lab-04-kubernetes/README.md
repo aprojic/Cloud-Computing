@@ -1,7 +1,7 @@
 <!-- kicker: Lab 04 · Orchestration -->
 # Lab 04 — Many copies: Kubernetes
 
-*Run the Lab 03 app on a three-node Kubernetes cluster in your codespace, scale it, break it on purpose, update it without downtime, and find out who wins when your commands and your file disagree.*
+*Run the Lab 03 app on a three-node Kubernetes cluster in your codespace, scale it, switch off a machine under it, update it without dropping a request, and fix a colleague's broken change.*
 
 `45 min` · `Codespaces · kind · kubectl` · `level: intro` · `submit: Merlin`
 
@@ -18,17 +18,17 @@ In Lab 03, `--scale web=3` failed: three containers wanted port 80 on one machin
 ![A Kubernetes cluster: the control plane decides, the worker nodes run the Pods](img/k8s-architecture.png)
 
 - **Pod, Deployment, Service.** A **Pod** is the smallest thing Kubernetes runs: one or more containers with one IP address. A **Deployment** keeps a set number of identical Pods running. A **Service** is one stable name and port in front of those Pods, and it spreads requests across them. Careful with the words: a *Compose* service becomes a Kubernetes *Deployment*.
-- **Desired state.** You don't tell Kubernetes what to do, you tell it what you want: "three copies of `web`, image 1.0". **Controllers** keep comparing that with what is running and fix any difference. Scaling, healing and updating are all just a changed desired state.
+- **Desired state.** You don't tell Kubernetes what to do, you tell it what you want: "three copies of `web`, image 1.0". **Controllers** keep comparing that with what is running and fix any difference. Scaling, healing (of a Pod or of a whole machine) and updating are all just a changed desired state.
 - **Storage that outlives Pods.** Pods come and go, so the data lives in a **PersistentVolumeClaim**, the Kubernetes version of the named volume from Lab 03.
 
-Part 2 runs the Lab 03 app on the cluster, Part 3 does what Compose couldn't (scale, heal, update), and Part 4 shows who wins when the file and your commands disagree.
+Part 2 runs the Lab 03 app on the cluster. Part 3 does what Compose couldn't: scale, survive a dead Pod and a dead machine, and update without downtime, while a second terminal shows what users would see. In Part 4 your file meets your commands, and you fix a broken change yourself.
 
 ## Learning outcomes
 
 - Create a local Kubernetes **cluster** and inspect its nodes with `kubectl`.
 - Deploy a multi-container app from a YAML file, and explain how **Deployments, Services, ConfigMaps and PersistentVolumeClaims** map to `compose.yaml`.
-- **Scale** an app, watch Kubernetes **heal** it, and **roll out** and **roll back** a new version.
-- Explain why the YAML file, not the commands you typed, is the **desired state**.
+- **Scale** an app, watch Kubernetes **heal** it after a Pod and a node fail, and **roll out** and **roll back** a new version without downtime.
+- Explain why the YAML file is the **desired state**, and find out why a Service sends no traffic by comparing its **selector** with the Pods' labels.
 
 ## Prerequisites
 
@@ -42,12 +42,12 @@ Part 2 runs the Lab 03 app on the cluster, Part 3 does what Compose couldn't (sc
 
 ### 1.1 Open your machine and get the files
 
-Open the [repository's main page](../README.md), click **Open in GitHub Codespaces** and create a codespace. Open a terminal (**☰ → Terminal → New Terminal**) and copy the Lab 03 app and this lab's two YAML files into one folder:
+Open the [repository's main page](../README.md), click **Open in GitHub Codespaces** and create a codespace. Open a terminal (**☰ → Terminal → New Terminal**) and copy the Lab 03 app and this lab's three YAML files into one folder:
 
 ```bash
 mkdir ~/lab04
 cp /workspaces/Cloud-Computing/lab-03-compose/app/{app.py,Dockerfile,requirements.txt} ~/lab04/
-cp /workspaces/Cloud-Computing/lab-04-kubernetes/{kind.yaml,k8s.yaml} ~/lab04/
+cp /workspaces/Cloud-Computing/lab-04-kubernetes/{kind.yaml,k8s.yaml,service-web.yaml} ~/lab04/
 cd ~/lab04
 ls
 ```
@@ -56,10 +56,10 @@ ls
 > **Expected output**
 >
 > ```
-> Dockerfile  app.py  k8s.yaml  kind.yaml  requirements.txt
+> Dockerfile  app.py  k8s.yaml  kind.yaml  requirements.txt  service-web.yaml
 > ```
 
-The app, the Dockerfile and the requirements are exactly the ones from Lab 03. [`kind.yaml`](kind.yaml) describes the cluster, and [`k8s.yaml`](k8s.yaml) describes the app.
+The app, the Dockerfile and the requirements are exactly the ones from Lab 03. [`kind.yaml`](kind.yaml) describes the cluster and [`k8s.yaml`](k8s.yaml) describes the app. Leave `service-web.yaml` for Part 4.
 
 ### 1.2 Install kind and kubectl
 
@@ -176,7 +176,7 @@ It's longer than `compose.yaml` because each idea is a separate object. The comm
 
 A request from your browser takes this path: codespace port 80 → node port 30080 (`kind.yaml`) → Service `web` → one of the `web` Pods, port 8000.
 
-The `readinessProbe` lines do the job of the Compose `healthcheck`: a Pod gets traffic only once it answers.
+The `readinessProbe` lines do the job of the Compose `healthcheck`: a Pod gets traffic only once it answers. The `preStop` and `tolerations` lines matter in Part 3.
 
 ### 2.2 Build the image and load it into the cluster
 
@@ -204,7 +204,6 @@ In Lab 03 your name came from a `.env` file. In Kubernetes, settings live in a *
 kubectl create configmap student \
   --from-literal=STUDENT_NAME="Your Name" \
   --from-literal=CODESPACE_NAME="$CODESPACE_NAME"
-kubectl get configmap student -o yaml | grep -A2 '^data:'
 ```
 
 > [!NOTE]
@@ -212,9 +211,6 @@ kubectl get configmap student -o yaml | grep -A2 '^data:'
 >
 > ```
 > configmap/student created
-> data:
->   CODESPACE_NAME: fuzzy-space-giggle-x5r4…
->   STUDENT_NAME: Your Name
 > ```
 
 ### 2.4 Start the app
@@ -296,7 +292,7 @@ Make the page reachable: **Ports** tab → port **80** → right-click → **Por
 >
 > Which node each Pod ran on (2.4), and the Pod names that answered your six requests (2.5).
 
-## Part 3 — What Compose couldn't do · ~13 min
+## Part 3 — What Compose couldn't do · ~14 min
 
 ### 3.1 Scale
 
@@ -324,9 +320,32 @@ kubectl get pods -o wide -l app=web
 > web-7fb9c9c87d-j4x2z   1/1     Running   0          11s   10.244.2.5   lab04-worker    ...
 > ```
 
-### 3.2 Break it on purpose
+### 3.2 Start a watcher
 
-Copy the name of **one** `web` Pod from the list above, put it in the first line below instead of the example, and run all three lines:
+For the rest of the lab, keep an eye on the app from a second terminal. Click **Split Terminal** (the icon with two panes at the top right of the terminal panel, or **Ctrl+Shift+5**). In the **new** terminal, run:
+
+```bash
+while true; do
+  page=$(curl -s -m 1 localhost) || page="FAILED"
+  echo "$(date +%T) $(echo "$page" | grep -oE 'H[a-z]+ from|web-[a-z0-9]+-[a-z0-9]+|FAILED' | tr '\n' ' ')"
+  sleep 0.5
+done
+```
+
+> [!NOTE]
+> **Expected output (your values will differ)**
+>
+> ```
+> 16:04:10 Hello from web-7fb9c9c87d-c6kx2
+> 16:04:11 Hello from web-7fb9c9c87d-7whqh
+> 16:04:11 Hello from web-7fb9c9c87d-j4x2z
+> ```
+
+Two requests a second. Each line shows the time, the greeting and the Pod that answered, or **FAILED** if no answer came within a second. **Leave it running** and type everything else in the **first** terminal.
+
+### 3.3 Break a Pod
+
+Copy the name of **one** `web` Pod from 3.1, put it in the first line below instead of the example, and run all three lines:
 
 ```bash
 kubectl delete pod web-7fb9c9c87d-72ht8   # ← your Pod's name
@@ -349,11 +368,54 @@ kubectl get deployment web
 > web    4/5     5            4           47s
 > ```
 
-The Pod you deleted is gone, and a new one, a few seconds old, has taken its place. Nobody typed a command to start it. The Deployment still says *five*, and it saw four.
+A new Pod, a few seconds old, has taken the deleted one's place, and nobody typed a command to start it: the Deployment still says *five*, and it saw four. In the watcher, the deleted Pod's name stops appearing and the new one shows up. Did any request fail?
 
-### 3.3 Roll out a new version, then roll it back
+### 3.4 Break a machine
 
-Version 2.0 of the app says *Hi* instead of *Hello*. Change the code, build the new image, load it and tell the Deployment to use it:
+A Pod is easy to replace. What if a whole node dies, as real hardware does? First look where Redis runs:
+
+```bash
+kubectl get pods -o wide
+```
+
+Redis keeps its data on the disk of its node (you'll see why in 4.3), so switch off the **other** worker. Put the name of the worker **without** `redis` in the first line, then watch the cluster:
+
+```bash
+docker stop lab04-worker   # ← the worker WITHOUT redis
+watch -n 2 'kubectl get nodes; kubectl get pods -o wide -l app=web'
+```
+
+`docker stop` switches the node's container off, like pulling the power cable of a server. Keep both terminals in view for about a minute and a half:
+
+| After about | In the `watch` table | In the watcher |
+|---|---|---|
+| 0–45 s | the node still says `Ready` | some requests **FAILED**: the Service still sends traffic to Pods on the dead node |
+| 45 s | the node turns `NotReady` | no more FAILED: its Pods are taken out of the Service |
+| 55 s | its Pods turn `Terminating` and stay so while the node is off; new ones start on the other worker | new Pod names appear |
+| 70 s | five `web` Pods `Running` on one worker | only Pods from that worker answer |
+
+**Take Screenshot B as soon as the node shows `NotReady`:** both terminals, with the `watch` table and the watcher's FAILED lines.
+
+When five Pods run on the remaining worker, press **Ctrl+C** to leave `watch`. Kubernetes waits about 40 seconds before it decides that a node is dead rather than slow. The `tolerations` lines in `k8s.yaml` then let the Pods stay only 10 more seconds; without them, they would wait five minutes.
+
+Now repair the machine:
+
+```bash
+docker start lab04-worker   # ← the same worker
+kubectl wait --for=condition=Ready nodes --all --timeout=120s
+kubectl get pods -o wide -l app=web
+```
+
+The node is back, and a few seconds later the `Terminating` Pods are gone: only the node itself can confirm that they have stopped. The new Pods stay where they are, because Kubernetes doesn't move running Pods just to even out the nodes.
+
+> [!IMPORTANT]
+> **In the report**
+>
+> Which worker you stopped, roughly how long the watcher showed FAILED lines, and how long it took until five `web` Pods were running again.
+
+### 3.5 Roll out a new version, then roll it back
+
+Version 2.0 of the app says *Hi* instead of *Hello*. Change the code, build the new image, load it and tell the Deployment to use it. **Watch the watcher** while the rollout runs:
 
 ```bash
 sed -i 's/Hello from/Hi from/' app.py
@@ -361,35 +423,44 @@ docker build -t lab03-web:2.0 .
 kind load docker-image lab03-web:2.0 --name lab04
 kubectl set image deployment/web web=lab03-web:2.0
 kubectl rollout status deployment web
-curl -s localhost | grep h1
 kubectl get replicasets
 ```
 
 > [!NOTE]
-> **Expected output, from `set image` on (your values will differ)**
+> **Expected output in the watcher (your values will differ)**
+>
+> ```
+> 16:02:51 Hello from web-7fb9c9c87d-c6kx2
+> 16:02:51 Hi from web-7df998fb79-64pm5
+> 16:02:52 Hello from web-7fb9c9c87d-dzx2k
+> 16:02:52 Hi from web-7df998fb79-gh5dq
+> 16:02:53 Hi from web-7df998fb79-ljmv5
+> ```
+>
+> **And in the first terminal, from `set image` on**
 >
 > ```
 > deployment.apps/web image updated
 > Waiting for deployment "web" rollout to finish: 2 out of 5 new replicas have been updated...
-> Waiting for deployment "web" rollout to finish: 3 out of 5 new replicas have been updated...
 > ...
-> Waiting for deployment "web" rollout to finish: 1 old replicas are pending termination...
 > deployment "web" successfully rolled out
-> <h1>Hi from Your Name</h1>
 > NAME              DESIRED   CURRENT   READY   AGE
-> redis-d44b44dbb   1         1         1       92s
+> redis-d44b44dbb   1         1         1       3m
 > web-7df998fb79    5         5         5       37s
-> web-7fb9c9c87d    0         0         0       92s
+> web-7fb9c9c87d    0         0         0       3m
 > ```
 
-A Deployment doesn't manage Pods directly. For each version it creates a **ReplicaSet**, and the ReplicaSet keeps the Pods. That's where the middle part of each Pod name comes from: `web-7fb9c9c87d-…` is version 1.0, `web-7df998fb79-…` is 2.0. During the update Kubernetes started new Pods a few at a time and stopped old ones only once the new ones were ready, so some Pods answered all the time.
+**Take Screenshot C:** the watcher where *Hello* turns into *Hi*. Scroll up in the watcher if it has already passed.
 
-Version 2.0 turns out to be a mistake. Go back:
+For a few seconds both versions answered, and no request failed. New Pods get traffic only once they are ready (the `readinessProbe`), and old ones stop a few at a time, after a short pause so that requests already on their way can finish (the `preStop` lines in `k8s.yaml`).
+
+A Deployment doesn't manage Pods directly. For each version it creates a **ReplicaSet**, and the ReplicaSet keeps the Pods. That's where the middle part of each Pod name comes from: `web-7fb9c9c87d-…` is version 1.0, `web-7df998fb79-…` is 2.0.
+
+Version 2.0 turns out to be a mistake. Go back, and watch the watcher again:
 
 ```bash
 kubectl rollout undo deployment web
 kubectl rollout status deployment web
-curl -s localhost | grep h1
 kubectl get replicasets
 ```
 
@@ -400,19 +471,21 @@ kubectl get replicasets
 > deployment.apps/web rolled back
 > ...
 > deployment "web" successfully rolled out
-> <h1>Hello from Your Name</h1>
 > NAME              DESIRED   CURRENT   READY   AGE
-> redis-d44b44dbb   1         1         1       2m
-> web-7df998fb79    0         0         0       50s
-> web-7fb9c9c87d    5         5         5       2m
+> redis-d44b44dbb   1         1         1       4m
+> web-7df998fb79    0         0         0       90s
+> web-7fb9c9c87d    5         5         5       4m
 > ```
 
 > [!TIP]
 > **A `Warning` about `last-applied-configuration`?** That's expected. Kubernetes is telling you that the running Deployment and your `k8s.yaml` no longer say the same thing. Part 4 shows why that matters.
 
-**Take Screenshot B now:** your terminal with both `<h1>` lines and both `kubectl get replicasets` tables. If it doesn't fit on one screen, take two (B1 and B2).
+> [!IMPORTANT]
+> **In the report**
+>
+> Both `kubectl get replicasets` tables (copy them as text).
 
-## Part 4 — Who wins: your commands or your file? · ~6 min
+## Part 4 — Your file, a colleague's file · ~9 min
 
 ### 4.1 Predict, then apply the file again
 
@@ -438,12 +511,63 @@ kubectl get deployment web
 > service/redis unchanged
 > persistentvolumeclaim/redis-data unchanged
 > NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-> web    3/3     3            3           98s
+> web    3/3     3            3           5m
 > ```
 
 Only `web` was *configured*: Kubernetes compared the file with what was running and changed just the difference.
 
-### 4.2 Replace the database Pod
+### 4.2 A colleague's change
+
+A colleague rewrote the `web` Service and sent you [`service-web.yaml`](service-web.yaml) with the note *"Cleaned up the names. Works the same."* Apply it and look at the watcher:
+
+```bash
+kubectl apply -f service-web.yaml
+```
+
+Every line in the watcher now says **FAILED**. Find out why, the way you would at work. Start with the Pods:
+
+```bash
+kubectl get pods -l app=web
+```
+
+They are `Running` and ready (Pods that say `Completed` are the ones 4.1 removed, and they disappear in a few seconds), so the app itself is fine and the problem is in front of it. Ask the Service which Pods it sends traffic to, and compare with the Pods' labels:
+
+```bash
+kubectl describe service web | grep -E 'Selector|Endpoints'
+kubectl get pods --show-labels
+```
+
+> [!NOTE]
+> **Expected output (your values will differ)**
+>
+> ```
+> Selector:                 app=frontend
+> Endpoints:
+> NAME                    READY   STATUS    RESTARTS   AGE     LABELS
+> redis-d44b44dbb-c4k9g   1/1     Running   0          6m      app=redis,pod-template-hash=d44b44dbb
+> web-7fb9c9c87d-b7gkl    1/1     Running   0          2m      app=web,pod-template-hash=7fb9c9c87d
+> ...
+> ```
+
+**Endpoints** are the Pods behind a Service, and this one has none. A Service finds its Pods only by their labels, through its **Selector**. Now fix it yourself: open the file in the editor, correct the one wrong line, save it (**Ctrl+S**) and apply it:
+
+```bash
+code service-web.yaml
+```
+
+```bash
+kubectl apply -f service-web.yaml
+kubectl describe service web | grep -E 'Selector|Endpoints'
+```
+
+When the Endpoints line lists three IP addresses, the watcher answers again.
+
+> [!IMPORTANT]
+> **In the report**
+>
+> The Selector and Endpoints lines before and after your fix, and the line you changed.
+
+### 4.3 Replace the database Pod
 
 Note the count, delete the Redis Pod, wait for its replacement and check again:
 
@@ -459,24 +583,26 @@ kubectl get pvc
 > **Expected output (your values will differ)**
 >
 > ```
->   <li>Visits: <b>22</b></li>
+>   <li>Visits: <b>622</b></li>
 > pod "redis-d44b44dbb-s6d9s" deleted from default namespace
 > pod/redis-d44b44dbb-tz9lx condition met
->   <li>Visits: <b>23</b></li>
+>   <li>Visits: <b>627</b></li>
 > NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   ...
 > redis-data   Bound    pvc-25696b16-933c-4b3a-be9d-7970a5e58548   100Mi      RWO            standard       ...
 > ```
 
-A new Redis Pod, and the count went on from where it was. As in Lab 03, Redis saved the count to `/data` when it was stopped, and `/data` is the PersistentVolumeClaim, which doesn't belong to any one Pod. kind keeps the volume on a node's disk; in a cloud it would be a managed disk.
+A new Redis Pod, and the count went on from where it was (plus the watcher's requests in between). The watcher showed FAILED for a few seconds, though: there is only one Redis, and while it was being replaced the app had no database. Stateless `web` Pods can simply be copied; a database needs more care, which is why clouds sell it as a managed service. As in Lab 03, Redis saved the count to `/data` when it was stopped, and `/data` is the PersistentVolumeClaim, which doesn't belong to any one Pod. kind keeps that volume on the disk of the node where Redis runs, so Redis can only start on that node: that's why you switched off the other worker in 3.4. In a cloud, the volume would be a network disk that can follow the Pod to another node.
 
 > [!IMPORTANT]
 > **In the report**
 >
-> Your prediction and the result of 4.1, and the two `Visits` values from 4.2.
+> Your prediction and the result of 4.1, and the two `Visits` values from 4.3.
 
 ## Part 5 — Clean up · ~4 min
 
 ### 5.1 Delete the cluster
+
+Stop the watcher first: click into the second terminal and press **Ctrl+C**. Then, in the first one:
 
 ```bash
 kind delete cluster --name lab04
@@ -524,17 +650,18 @@ Submit on Merlin whenever you're ready. The only hard deadline: **all labs must 
 >
 > 1. **Your data:** GitHub username, codespace name, the node names, the Kubernetes version and the `real` time of `kind create cluster` (1.3), which node each Pod ran on and the Pod names from your six requests (2.4, 2.5).
 > 2. **Screenshot A:** your page in a browser, with the **forwarded address in the address bar** (2.5).
-> 3. **Screenshot B** (3.3), **your prediction and the result** from 4.1, and **the two counts** from 4.2.
-> 4. **Short answers**, in your own words:
+> 3. **Screenshot B** (3.4) with the worker you stopped and your timings, **Screenshot C** and the two ReplicaSet tables (3.5).
+> 4. **Your prediction and the result** (4.1), the **Selector and Endpoints lines before and after** your fix and the line you changed (4.2), and **the two counts** (4.3).
+> 5. **Short answers**, in your own words:
 >    - Which object did you scale in 3.1, and which one kept the same name and port the whole time? Why did five `web` copies work here, when `--scale web=3` failed in Lab 03?
->    - Who started the new Pod in 3.2, and how did it know that one was missing?
->    - What happened to the two ReplicaSets during the update and during the undo (3.3)? Why did the app keep answering?
+>    - When you switched off a node (3.4), why did some requests fail for a while, and what made them stop? Why did I ask you to switch off the worker *without* Redis?
+>    - What did the watcher show during the rolling update (3.5), and why did no request fail? What happened to the two ReplicaSets during the update and the undo?
 >    - Explain your result in 4.1. What does it say about `kubectl scale` compared with the YAML file? Which of the two would you trust, and why?
->    - Where was the visit count while the Redis Pod was replaced (4.2)? Which object in `k8s.yaml` made that possible, and what did it replace from `compose.yaml`?
+>    - In 4.2 every Pod was healthy, but the site was down. Why? Which output showed you the cause?
 
 | Item | Required |
 |---|:-:|
-| Your data, prediction, counts and screenshots A–B, consistent with each other (same codespace, Pod names, ReplicaSets, counts) | ✓ |
+| Your data, timings, tables, prediction, Selector/Endpoints lines, counts and screenshots A–C, consistent with each other (same codespace, Pod names, ReplicaSets, counts) | ✓ |
 | Short answers, using your own outputs | ✓ |
 
 *Your report is about **your** run: your codespace, your cluster, your Pods. Reports that don't match each other or look copied will be checked again, and I may ask you to walk me through your report.*

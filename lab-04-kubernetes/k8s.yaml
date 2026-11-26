@@ -19,6 +19,12 @@ spec:
             - configMapRef: { name: student }   # compose: environment (from .env)
           readinessProbe:     # send traffic only once port 8000 answers
             tcpSocket: { port: 8000 }
+          lifecycle:
+            preStop:          # before stopping, wait until the Service stops sending traffic
+              sleep: { seconds: 3 }
+      tolerations:            # leave a dead node after 10 s (the default is 5 min)
+        - { key: node.kubernetes.io/unreachable, operator: Exists, effect: NoExecute, tolerationSeconds: 10 }
+        - { key: node.kubernetes.io/not-ready, operator: Exists, effect: NoExecute, tolerationSeconds: 10 }
 ---
 apiVersion: v1
 kind: Service                 # compose: the name "web" and ports: "80:8000"
