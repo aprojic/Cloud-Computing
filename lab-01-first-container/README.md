@@ -16,7 +16,7 @@ An app never runs alone. It needs a language runtime, libraries and settings, an
 - An **image** is the package: a read-only file system (a small Linux, the libraries, the app) plus the command that starts it. Images are stored in a **registry**. `docker run alpine` pulls `alpine` from Docker Hub, the default one.
 - A **container** is a running copy of an image: an ordinary Linux process with a thin writable layer on top. You can start many containers from one image, and each one starts clean.
 - The isolation comes from two features of the Linux kernel. **Namespaces** decide what a process can *see*: its own files, process list and network. **cgroups** decide how much it can *use*: CPU and memory.
-- A **virtual machine** (Lab 04) boots its own kernel on a hypervisor. A container has no kernel of its own and shares the host's, so nothing boots and it starts in a fraction of a second. The price is weaker isolation: a bug in the shared kernel affects every container on that host.
+- A **virtual machine** boots its own kernel on a hypervisor. A container has no kernel of its own and shares the host's, so nothing boots and it starts in a fraction of a second. The price is weaker isolation: a bug in the shared kernel affects every container on that host.
 
 ![A VM boots its own kernel on a hypervisor; containers share the host kernel; your codespace is a container on a Linux VM](img/vm-vs-container.png)
 
@@ -31,7 +31,7 @@ Clouds stack both: your codespace is itself a container on a Linux VM, and today
 
 ## Prerequisites
 
-- [ ] **[Lab 00](../lab-00-setup/README.md), Part A done:** you can open a codespace from this repository and run `docker run --rm alpine echo "Hello from a container"`.
+- [ ] **[Lab 00](../lab-00-setup/README.md) done:** you can open a codespace from this repository and run `docker run --rm alpine echo "Hello from a container"`.
 - [ ] A phone (or a second browser tab) to open your page.
 
 > [!TIP]
@@ -66,8 +66,7 @@ The first run may **pull** (download) the `alpine` **image** if it isn't on this
 > [!IMPORTANT]
 > **In the report**
 >
-> The `real` time of the second run. In Lab 04 you'll time how long a cloud provider needs to give you a whole virtual machine, and compare.
-
+> The `real` time of the second run.
 ### 1.3 Look inside
 
 ```bash

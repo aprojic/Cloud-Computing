@@ -9,7 +9,7 @@ Open an issue and pick a form:
 - **Problem with a lab**: a command fails, or the output differs from the instructions.
 - **Typo or unclear step**: something is wrong, outdated or hard to follow.
 
-Issues are **public**. Never paste passwords, keys, tokens or your full Azure subscription ID.
+Issues are **public**. Never paste passwords, keys or tokens.
 Questions about grades, submissions or deadlines go to Merlin or email, not here.
 
 ## Suggest a fix

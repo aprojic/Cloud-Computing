@@ -1,0 +1,11 @@
+# A local Kubernetes cluster for Lab 04: one control-plane node and two workers.
+# Each node is a Docker container in your codespace; in a cloud, each would be a VM.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080   # the web Service's nodePort (k8s.yaml) ...
+        hostPort: 80           # ... becomes port 80 of your codespace
+  - role: worker
+  - role: worker

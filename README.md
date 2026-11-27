@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Ubuntu-24.04-0E1116?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu 24.04">
   <img src="https://img.shields.io/badge/Docker-in--Docker-0E1116?style=flat-square&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/Azure-for%20Students-0E1116?style=flat-square" alt="Azure for Students">
+  <img src="https://img.shields.io/badge/Kubernetes-kind-0E1116?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes">
   <img src="https://img.shields.io/badge/license-CC%20BY%204.0-E82028?style=flat-square" alt="License: CC BY 4.0">
   <a href="https://github.com/aprojic/Cloud-Computing/actions/workflows/checks.yml"><img src="https://img.shields.io/github/actions/workflow/status/aprojic/Cloud-Computing/checks.yml?branch=main&style=flat-square&label=checks" alt="Checks"></a>
 </p>
@@ -22,7 +22,7 @@ Every lab's instructions live here, and Merlin links straight to them. You **sub
 | # | Do this | Details |
 |:-:|---|---|
 | **1** | Open this week's lab in the table below | The instructions live here; Merlin links to this page, so it's always the current version. |
-| **2** | Work where the lab tells you to | Container labs run in **GitHub Codespaces** (button above). Azure labs run in **Azure Cloud Shell**. Both are in your browser. Use the copy button on each code block. |
+| **2** | Work in a codespace | Every lab runs in **GitHub Codespaces** (button above), in your browser. Use the copy button on each code block. |
 | **3** | Submit your report on Merlin | Each lab tells you exactly what goes in: your own data, screenshots and short answers. You can finish a lab at home and submit any time, but all labs must be in before the first exam period. |
 
 > [!TIP]
@@ -35,11 +35,11 @@ Every lab's instructions live here, and Merlin links straight to them. You **sub
 
 | # | Lab | Runs on | Notes |
 |:-:|---|---|---|
-| 00 | [Set up your cloud](lab-00-setup/README.md) | GitHub Codespaces · Azure for Students | at home: Part A before Lab 01, Part B before Lab 04 |
+| 00 | [Set up your cloud](lab-00-setup/README.md) | GitHub Codespaces | at home, before Lab 01 |
 | 01 | [Your first container](lab-01-first-container/README.md) | Codespaces · Docker | |
 | 02 | [Build your own image](lab-02-own-image/README.md) | Codespaces · Docker · GHCR | |
 | 03 | [Many containers: Docker Compose](lab-03-compose/README.md) | Codespaces · Docker Compose | |
-| 04 | [Your first server in the cloud (IaaS)](lab-04-first-server/README.md) | Azure Cloud Shell | Plan B in Codespaces: [plan-b.md](lab-04-first-server/plan-b.md), only when told |
+| 04 | [Many copies: Kubernetes](lab-04-kubernetes/README.md) | Codespaces · kind · kubectl | |
 | 05 | Containers in the cloud | LocalStack (AWS ECR + ECS) | *coming soon* |
 | 06 | Serverless and infrastructure as code | LocalStack · Terraform | *coming soon* |
 | 07 | AI in the cloud | Codespaces + model APIs | *coming soon* |
@@ -48,7 +48,7 @@ Every lab's instructions live here, and Merlin links straight to them. You **sub
 
 - **Ubuntu 24.04** dev container ([`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json))
 - **Docker** inside the codespace (Docker-in-Docker), for the container labs
-- Port **80** forwarded automatically and labelled *web* (Labs 01–03)
+- Port **80** forwarded automatically and labelled *web* (Labs 01–04)
 - 2 CPU cores, which fits the free monthly Codespaces quota
 
 > [!WARNING]
